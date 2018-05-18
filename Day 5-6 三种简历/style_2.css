@@ -17,6 +17,7 @@ main {
 }
 
 ul {
+    overflow: auto;
     list-style-type: none;
     padding-left: 0px;
 }
@@ -28,10 +29,6 @@ ul {
 
 .vertical_list li {
     margin-bottom: 1em;
-}
-
-.clear_float {
-    clear: both;
 }
 
 .vertical_list b {

@@ -24,6 +24,7 @@ h2 {
 }
 
 ul {
+    overflow: auto;
     list-style-type: none;
     padding-left: 0px;
 }
@@ -31,8 +32,4 @@ ul {
 .horizontal_list li {
     float: left;
     margin-right: 2em;
-}
-
-.clear_float {
-    clear: both;
 }
