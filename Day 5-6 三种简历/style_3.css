@@ -1,0 +1,38 @@
+.title {
+    padding: 30px;
+    color: #ffffff;
+    background-color: #858585;
+    background-size: cover;
+}
+
+h1 {
+    margin: 0px;
+}
+
+section {
+    border: 2px solid #d6d6d6;
+    border-top-width: 0px;
+    overflow: auto;
+}
+
+h2 {
+    float: left;
+    margin: 0px 0.8em 0px 0px;
+    padding: 50px 30px;
+    background-color: #d6d6d6;
+    border-bottom: 2px solid #ffffff;
+}
+
+ul {
+    list-style-type: none;
+    padding-left: 0px;
+}
+
+.horizontal_list li {
+    float: left;
+    margin-right: 2em;
+}
+
+.clear_float {
+    clear: both;
+}

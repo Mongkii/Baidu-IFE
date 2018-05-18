@@ -1,0 +1,39 @@
+header,main {
+    display: table-cell;
+}
+
+.title {
+    width: 20%;
+    padding-top: 2em;
+    text-align: center;
+    color: #ffffff;
+    background-color: #74a5f4;
+}
+
+main {
+    vertical-align: top;
+    padding-left: 1.5em;
+    width: 70%
+}
+
+ul {
+    list-style-type: none;
+    padding-left: 0px;
+}
+
+.horizontal_list li {
+    float: left;
+    margin-right: 2em;
+}
+
+.vertical_list li {
+    margin-bottom: 1em;
+}
+
+.clear_float {
+    clear: both;
+}
+
+.vertical_list b {
+    display: block;
+}

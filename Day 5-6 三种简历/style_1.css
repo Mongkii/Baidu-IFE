@@ -1,0 +1,21 @@
+ul {
+    list-style-type: none;
+    padding-left: 0px;
+}
+
+.horizontal_list li {
+    float: left;
+    margin-right: 2em;
+}
+
+.vertical_list li {
+    margin-bottom: 1em;
+}
+
+.clear_float {
+    clear: both;
+}
+
+.vertical_list b {
+    display: block;
+}
