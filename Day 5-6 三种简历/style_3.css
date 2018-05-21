@@ -24,7 +24,7 @@ h2 {
 }
 
 ul {
-    overflow: auto;
+    overflow: auto; /* section 已设置为 overflow: auto，此行无必要（除非在列表之外还要补充内容） */ 
     list-style-type: none;
     padding-left: 0px;
 }
