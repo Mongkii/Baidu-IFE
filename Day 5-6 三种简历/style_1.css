@@ -1,3 +1,4 @@
+/* ---- 另一种实现方式  ----
 ul {
     overflow: auto;
     list-style-type: none;
@@ -6,6 +7,17 @@ ul {
 
 .horizontal_list li {
     float: left;
+    margin-right: 2em;
+}
+*/
+
+ul {
+    list-style-type: none;
+    padding-left: 0;
+}
+
+.horizontal_list li {
+    display: inline;
     margin-right: 2em;
 }
 

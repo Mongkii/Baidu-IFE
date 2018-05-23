@@ -17,13 +17,12 @@ main {
 }
 
 ul {
-    overflow: auto;
     list-style-type: none;
-    padding-left: 0px;
+    padding-left: 0;
 }
 
 .horizontal_list li {
-    float: left;
+    display: inline;
     margin-right: 2em;
 }
 
