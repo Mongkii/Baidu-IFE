@@ -56,33 +56,26 @@ header {
 
 .banner_nav {
     position: absolute;
-    bottom: 0.5em;
+    bottom: 10px;
     right: calc(50% - 480px);
 }
 
 .banner_nav li {
     display: inline-block;
-    position: relative;
     box-sizing: border-box;
     width: 30px;
     height: 30px;
     border: 1px solid dimgrey;
     background-color: rgba(255, 255, 255, 0.5);
-}
-
-.banner_nav a {
-    width: fit-content;
-    position: absolute;
-    left: 0;
-    right: 0;
-    bottom: 3px;
-    margin: 0 auto;
+    line-height: 30px;
+    text-align: center;
     color: dimgrey;
-    text-decoration: none;
 }
 
 .banner_nav .active {
+    background-color: rgba(255, 255, 255, 0.8);
     height: 45px;
+    line-height: 60px;
 }
 
 /* Content Nav */
