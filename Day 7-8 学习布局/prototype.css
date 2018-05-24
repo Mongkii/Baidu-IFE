@@ -1,0 +1,144 @@
+/* Total */
+body {
+    margin: 0;
+}
+
+ul {
+    list-style-type: none;
+    padding-left: 0;
+    margin: 0;
+}
+
+p {
+    margin: 0;
+}
+
+/* Header */
+header {
+    background-color: #333333;
+}
+
+.header_content {
+    width: 960px;
+    height: 80px;
+    margin: 0 auto;
+    position: relative;
+}
+
+.logo {
+    color: #ffffff;
+    margin: 0;
+    line-height: 80px;
+}
+
+.header_nav {
+    position: absolute;
+    top: 0;
+    right: 0;
+}
+
+.header_nav li {
+    display: inline;
+    margin-right: 0.5em;
+}
+
+.header_nav li a {
+    color: #ffffff;
+    font-size: small;
+}
+
+/* Banner */
+.banner {
+    background-color: #7ab84a;
+    position: relative;
+    height: 360px;
+}
+
+.banner_nav {
+    position: absolute;
+    bottom: 0.5em;
+    right: calc(50% - 480px);
+}
+
+.banner_nav li {
+    display: inline-block;
+    position: relative;
+    box-sizing: border-box;
+    width: 30px;
+    height: 30px;
+    border: 1px solid dimgrey;
+    background-color: rgba(255, 255, 255, 0.5);
+}
+
+.banner_nav a {
+    width: fit-content;
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 3px;
+    margin: 0 auto;
+    color: dimgrey;
+    text-decoration: none;
+}
+
+.banner_nav .active {
+    height: 45px;
+}
+
+/* Content Nav */
+.content_nav {
+    padding: 20px calc(50% - 480px) 0;
+    overflow: auto;
+}
+
+.content_nav li {
+    float: left;
+    padding: 0.8em 1.2em;
+    border: 1px solid #e1e1e1;
+    border-radius: 20px 20px 0 0;
+    background-color: #eeeeee;
+}
+
+.content_nav .active {
+    background-color: #ffffff;
+    border-bottom: 1px solid #ffffff;
+}
+
+/* Content Flow */
+.content {
+    border-top: 1px solid #e1e1e1;
+    margin-top: -1px;
+    padding: 10px calc(50% - 480px);
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+.content p {
+    box-sizing: border-box;
+    height: 200px;
+    padding: 80px;
+    text-align: center;
+    border: 1px solid #d3d3d3;
+    margin: 5px 0;
+}
+
+.row_1, .row_3 {
+    width: 32%;
+}
+
+.row_2 {
+    width: 24%;
+}
+
+/* Footer */
+footer {
+    background-color: #666666;
+    height: 80px;
+    padding-top: 10px;
+}
+
+footer p {
+    color: #ffffff;
+    text-align: center;
+}
