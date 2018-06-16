@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>简历</title>
+    <link href="style.css" rel="stylesheet">
+</head>
+<body>
+<header class="title">
+    <h1>简历</h1>
+    <button id="say_hi">你好！</button>
+    <button id="toggle_hobby">显示兴趣</button>
+</header>
+<main>
+    <section>
+        <h2>基本信息</h2>
+        <ul class="horizontal_list">
+            <li><b>姓名</b> 张三</li>
+            <li><b>性别</b> 男</li>
+            <li><b>应聘职位</b> Web前端工程师</li>
+        </ul>
+    </section>
+    <section>
+        <h2>联系方式</h2>
+        <ul class="horizontal_list">
+            <li><b>手机</b> 12312341234</li>
+            <li><b>Email</b> <a href="mailto:joinfe@baidu.com">joinfe@baidu.com</a></li>
+            <li><b>个人主页</b> <a href="https://github.com/">Github</a></li>
+        </ul>
+    </section>
+    <section>
+        <h2>能力描述</h2>
+        <ul class="vertical_list">
+            <li><b>技术能力</b>熟练掌握 HTML，CSS，JavaScript</li>
+            <li><b>综合能力</b>良好的沟通，主动积极，努力勤奋</li>
+        </ul>
+    </section>
+    <section>
+        <h2>教育经历</h2>
+        <ul class="vertical_list">
+            <li><b>本科</b>百度前端技术学院小薇学院</li>
+            <li><b>研究生</b>百度前端技术学院大斌学院</li>
+        </ul>
+    </section>
+    <section>
+        <h2>项目经历</h2>
+        <ul class="vertical_list">
+            <li><b>小度小度</b>作为前端工程师角色参与了 ABC 组件的开发</li>
+            <li><b>SAN Doc</b>作为文档工程师参与了 SAN Doc 编写</li>
+        </ul>
+    </section>
+    <section id="hobby">
+        <h2>兴趣爱好</h2>
+        <ul class="vertical_list">
+            <li><b>编程</b> 前端开发，网页设计</li>
+            <li><b>设计</b> 平面设计，交互动效</li>
+        </ul>
+    </section>
+</main>
+<script>
+    var hobby_is_hidden = true;
+
+    document.getElementById("say_hi").onclick = function () {
+        alert("你好哇！");
+    }
+
+    document.getElementById("toggle_hobby").onclick = function () {
+        if (hobby_is_hidden) {
+            document.getElementById("hobby").style.display = "block";
+            document.getElementById("toggle_hobby").innerHTML = "隐藏兴趣";
+            hobby_is_hidden = false;
+        } else {
+            document.getElementById("hobby").style.display = "none";
+            document.getElementById("toggle_hobby").innerHTML = "显示兴趣";
+            hobby_is_hidden = true;
+        }
+    }
+</script>
+</body>
+</html>
