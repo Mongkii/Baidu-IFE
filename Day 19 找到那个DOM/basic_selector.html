@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>IFE ECMAScript</title>
+</head>
+<body>
+<div id="wrapper">
+    <div id="news-top" class="section">
+        <h3>Some title</h3>
+        <div class="content">
+            <ul>
+                <li><span>HTML</span><a href="">Some Link1</a></li>
+                <li><span>JS</span><a class="active" href="">Some Link2</a></li>
+                <li><span>CSS</span><a href="">Some Link3</a></li>
+                <li><span>JS</span><a href="">Some Link4</a></li>
+            </ul>
+        </div>
+        <img src="">
+        <p class="">Some Text</p>
+    </div>
+    <div id="news-normal" class="section">
+        <h3>Some title</h3>
+        <div class="content">
+            <ul>
+                <li><span>HTML</span><a href="">Some Link1</a></li>
+                <li><span>HTML</span><a href="">Some Link2</a></li>
+                <li><span>JS</span><a class="active" href="#">Some Link3</a></li>
+                <li><span>CSS</span><a href="">Some Link4</a></li>
+            </ul>
+        </div>
+        <img src="">
+        <p class="">Some Text</p>
+    </div>
+</div>
+<br>
+<h3>输出结果</h3>
+<hr>
+<p id="result">点击下方按钮输出</p>
+<button id="getAllListItem" title="返回页面中所有li标签">返回 li</button>
+<button id="findAllHtmlSpanInOneSection" title="返回某个section下所有span中内容为HTML的span标签">返回 HTML span</button>
+<button id="findListItem" title="返回某个section下，所有所包含span内容为spanCont的LI标签">返回特定 span</button>
+<button id="getActiveLinkContent" title="返回某个section下，class为active的链接中包含的文字内容">返回 active class</button>
+<script>
+
+    function getAllListItem() {
+        var node_list = document.getElementsByTagName("li");
+        var output = "";
+        for (var i = 0; i < node_list.length; i++) {
+            output += "<li>" + node_list[i].innerHTML + "</li>\n";
+        }
+        return output;// 返回页面中所有li标签
+    }
+
+    function findAllHtmlSpanInOneSection(sectionId) {
+        var node_list = document.getElementById(sectionId).getElementsByTagName("span");
+        var output = "";
+        for (var i = 0; i < node_list.length; i++) {
+            if (node_list[i].innerHTML == "HTML") {
+                output += "<span>" + node_list[i].innerHTML + "</span>\n";
+            }
+        }
+        return output;// 返回某个section下所有span中内容为HTML的span标签
+    }
+
+    function findListItem(sectionId, spanCont) {
+        var node_list = document.getElementById(sectionId).getElementsByTagName("li");
+        var output = "";
+        for (var i = 0; i < node_list.length; i++) {
+            var sub_node_list = node_list[i].getElementsByTagName("span");
+            var have_span = false;
+            for (var j = 0; j < sub_node_list.length; j++) {
+                if (sub_node_list[j].innerHTML == spanCont) {
+                    have_span = true;
+                }
+            }
+            if (have_span) {
+                output += "<li>" + node_list[i].innerHTML + "</li>\n";
+            }
+        }
+        return output;/// 返回某个section下，所有所包含span内容为spanCont的LI标签
+    }
+
+    function getActiveLinkContent(sectionId) {
+        var node_list = document.getElementById(sectionId).getElementsByTagName("a");
+        var output = "";
+        for (var i = 0; i < node_list.length; i++) {
+            if (node_list[i].getAttribute("class") == "active") {
+                output += node_list[i].innerText + "\n";
+            }
+        }
+        return output;// 返回某个section下，class为active的链接中包含的文字内容
+    }
+
+    var result = document.getElementById("result");
+
+    document.getElementById("getAllListItem").onclick = function () {
+        result.innerText = getAllListItem();
+    }
+
+    document.getElementById("findAllHtmlSpanInOneSection").onclick = function () {
+        result.innerText = findAllHtmlSpanInOneSection("news-top");
+    }
+
+    document.getElementById("findListItem").onclick = function () {
+        result.innerText = findListItem("news-top", "JS");
+    }
+
+    document.getElementById("getActiveLinkContent").onclick = function () {
+        result.innerText = getActiveLinkContent("news-top");
+    }
+</script>
+</body>
+</html>
