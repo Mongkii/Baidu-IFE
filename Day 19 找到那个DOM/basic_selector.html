@@ -47,7 +47,7 @@
         var node_list = document.getElementsByTagName("li");
         var output = "";
         for (var i = 0; i < node_list.length; i++) {
-            output += "<li>" + node_list[i].innerHTML + "</li>\n";
+            output += node_list[i].outerHTML + "\n";
         }
         return output;// 返回页面中所有li标签
     }
@@ -57,7 +57,7 @@
         var output = "";
         for (var i = 0; i < node_list.length; i++) {
             if (node_list[i].innerHTML == "HTML") {
-                output += "<span>" + node_list[i].innerHTML + "</span>\n";
+                output += node_list[i].outerHTML + "\n";
             }
         }
         return output;// 返回某个section下所有span中内容为HTML的span标签
@@ -75,7 +75,7 @@
                 }
             }
             if (have_span) {
-                output += "<li>" + node_list[i].innerHTML + "</li>\n";
+                output += node_list[i].outerHTML + "\n";
             }
         }
         return output;/// 返回某个section下，所有所包含span内容为spanCont的LI标签

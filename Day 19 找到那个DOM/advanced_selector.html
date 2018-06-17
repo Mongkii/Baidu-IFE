@@ -13,7 +13,7 @@
                 <li><span>HTML</span><a href="">Some Link1</a></li>
                 <li><span>JS</span><a class="active" href="">Some Link2</a></li>
                 <li><span>CSS</span><a href="">Some Link3</a></li>
-                <li><span>JS</span><a href="">Some Link4</a><span>JS</span></li>
+                <li><span>JS</span><a href="">Some Link4</a></li>
             </ul>
         </div>
         <img src="">
@@ -47,25 +47,25 @@
         var node_list = document.querySelectorAll("li");
         var output = "";
         for (var i = 0; i < node_list.length; i++) {
-            output += "<li>" + node_list[i].innerHTML + "</li>\n";
+            output += node_list[i].outerHTML + "\n";
         }
         return output;// 返回页面中所有li标签
     }
 
     function findAllHtmlSpanInOneSection(sectionId) {
-        var selector_css_format = "#"+sectionId + " span";
+        var selector_css_format = "#" + sectionId + " span";
         var node_list = document.querySelectorAll(selector_css_format);
         var output = "";
         for (var i = 0; i < node_list.length; i++) {
             if (node_list[i].innerHTML == "HTML") {
-                output += "<span>" + node_list[i].innerHTML + "</span>\n";
+                output += node_list[i].outerHTML + "\n";
             }
         }
         return output;// 返回某个section下所有span中内容为HTML的span标签
     }
 
     function findListItem(sectionId, spanCont) {
-        var selector_css_format = "#"+sectionId + " li";
+        var selector_css_format = "#" + sectionId + " li";
         var node_list = document.querySelectorAll(selector_css_format);
         var output = "";
         for (var i = 0; i < node_list.length; i++) {
@@ -77,16 +77,16 @@
                 }
             }
             if (have_span) {
-                output += "<li>" + node_list[i].innerHTML + "</li>\n";
+                output += node_list[i].outerHTML + "\n";
             }
         }
         /* 以下的写法更省事，但是存在问题：当 li 下有多个满足条件的 span 时，会导致同一 li 标签多次被显示
-        var selector_css_format = "#"+sectionId + " li span";
+        var selector_css_format = "#" + sectionId + " li span";
         var node_list = document.querySelectorAll(selector_css_format);
         var output = "";
         for (var i = 0; i < node_list.length; i++) {
-            if (node_list[i].innerHTML ==spanCont) {
-                output += "<li>"+ node_list[i].parentNode.innerHTML + "</li>\n";
+            if (node_list[i].innerHTML == spanCont) {
+                output += node_list[i].parentNode.outerHTML + "\n";
             }
         }
         */
@@ -94,11 +94,11 @@
     }
 
     function getActiveLinkContent(sectionId) {
-        var selector_css_format = "#"+sectionId + " a.active";
+        var selector_css_format = "#" + sectionId + " a.active";
         var node_list = document.querySelectorAll(selector_css_format);
         var output = "";
         for (var i = 0; i < node_list.length; i++) {
-                output += node_list[i].innerText + "\n";
+            output += node_list[i].innerText + "\n";
         }
         return output;// 返回某个section下，class为active的链接中包含的文字内容
     }
