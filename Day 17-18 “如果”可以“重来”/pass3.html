@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Pass 3</title>
+</head>
+<body>
+<p id="indicator">Ready to go</p>
+<button id="start">Just do it!</button>
+<script>
+    function pass3() {
+        for (var i = 1; i <= 100; i++) {
+            if (i % 3 == 0 || (0 <= i - 30 && i - 30 <= 9) || i % 10 == 3) {
+                console.log("PA");
+            }
+            else {
+                console.log(i);
+            }
+        }
+    }
+
+    document.getElementById("start").addEventListener("click", pass3);
+    document.getElementById("start").addEventListener("click", function () {
+        document.getElementById("indicator").innerHTML = "Finished! View console for result!"
+    });
+</script>
+</body>
+</html>

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Multiple Table</title>
+    <style rel="stylesheet">
+        table, table td {
+            border: 1px solid #aaaaaa;
+            text-align: center;
+
+        }
+        table {
+            border-collapse: collapse;
+        }
+        table td {
+            padding: 5px 10px;
+        }
+    </style>
+</head>
+<body>
+<table id="table">
+    <tbody id="content"></tbody>
+</table>
+<button id="generate">生成乘法表</button>
+<script>
+    function genarateTable() {
+        var oneRow = "";
+        for (var i = 1; i <= 9; i++) {
+            for (var j = 1; j <= 9; j++) {
+                var formatOutput = i + " * " + j + " = " + i * j;
+                console.log(formatOutput);
+                oneRow += "<td>" + formatOutput + "</td>"
+            }
+            document.getElementById("content").innerHTML += "<tr>" + oneRow + "</tr>";
+            oneRow = "";
+        }
+    }
+
+    document.getElementById("generate").addEventListener("click", genarateTable);
+</script>
+</body>
+</html>

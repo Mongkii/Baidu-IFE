@@ -1,0 +1,35 @@
+.title {
+    padding: 30px;
+    color: #ffffff;
+    background-color: #858585;
+    background-size: cover;
+}
+
+h1 {
+    margin: 0;
+}
+
+section {
+    border: 2px solid #d6d6d6;
+    border-top-width: 0;
+    overflow: auto;
+}
+
+h2 {
+    float: left;
+    margin: 0 0.8em 0 0;
+    padding: 50px 30px;
+    background-color: #d6d6d6;
+    border-bottom: 2px solid #ffffff;
+}
+
+ul {
+    /* overflow: auto; PS：section 已设置为 overflow: auto，则此行无必要（除非在列表之外还要补充内容） */
+    list-style-type: none;
+    padding-left: 0;
+}
+
+.horizontal_list li {
+    display: inline;
+    margin-right: 2em;
+}

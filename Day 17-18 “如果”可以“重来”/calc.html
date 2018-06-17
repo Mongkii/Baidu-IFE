@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>IFE ECMAScript</title>
+</head>
+<body>
+<input id="first-number" type="text" value="0" placeholder="第一个数字"> <!-- type="number" 自带值必须为数字的限制，这里为了能使用"判断值是否为数字"的条件，将 type 改为了 text -->
+<input id="second-number" type="text" value="0" placeholder="第二个数字">
+<button id="add-btn">加</button>
+<button id="minus-btn">减</button>
+<button id="times-btn">乘</button>
+<button id="divide-btn">除</button>
+<p id="result">运算结果</p>
+<script>
+    function isNotNumber() {
+        return (isNaN(document.getElementById("first-number").value) || isNaN(document.getElementById("second-number").value));
+    }
+
+    document.getElementById("add-btn").onclick = function () {
+        try {
+            if (isNotNumber())
+                throw "Please enter only numbers!";
+            document.getElementById("result").innerHTML = "" + (Number(document.getElementById("first-number").value) + Number(document.getElementById("second-number").value));
+        }
+        catch (e) {
+            console.log(e);
+        }
+    }
+
+    document.getElementById("minus-btn").onclick = function () {
+        try {
+            if (isNotNumber())
+                throw "Please enter only numbers!";
+            document.getElementById("result").innerHTML = "" + (Number(document.getElementById("first-number").value) - Number(document.getElementById("second-number").value));
+        }
+        catch (e) {
+            console.log(e);
+        }
+    }
+
+    document.getElementById("times-btn").onclick = function () {
+        try {
+            if (isNotNumber())
+                throw "Please enter only numbers!";
+            document.getElementById("result").innerHTML = "" + (Number(document.getElementById("first-number").value) * Number(document.getElementById("second-number").value));
+
+        }
+        catch (e) {
+            console.log(e);
+        }
+    }
+
+    document.getElementById("divide-btn").onclick = function () {
+        try {
+            if (isNotNumber())
+                throw "Please enter only numbers!";
+            else  if (document.getElementById("second-number").value == 0)
+                throw "The divisor can't be 0!"
+            document.getElementById("result").innerHTML = "" + (Number(document.getElementById("first-number").value) / Number(document.getElementById("second-number").value));
+        }
+        catch (e) {
+            console.log(e);
+        }
+    }
+</script>
+</body>
+</html>
