@@ -18,17 +18,18 @@
 <script>
     var smile_pic = document.querySelector("#smile");
     var button = document.querySelector("#get_smile");
-    var position_y = 0;
-    smile_pic.style.backgroundPositionY = position_y + "px";
-    var is_smiling = false;
     var timer;
 
+    smile_pic.style.backgroundPositionY = "0";
+    var is_smiling = false;
+
     function moveBackgroundImage() {
+        var position_y = parseInt(smile_pic.style.backgroundPositionY);
         position_y -= 480;
-        smile_pic.style.backgroundPositionY = position_y + "px";
-        if (position_y == -7680) { // 让动画循环播放，不过 background-repeat 默认值是 repeat，其实并不需要这一条判断语句
-            position_y = 480;
+        if (position_y == -8160) { // 让动画循环播放，不过 background-repeat 默认值是 repeat，其实并不需要这一条判断语句
+            position_y = 0;
         }
+        smile_pic.style.backgroundPositionY = position_y + "px";       
     }
 
     button.onclick = function () {
