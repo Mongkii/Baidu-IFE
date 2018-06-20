@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Smile</title>
+    <style rel="stylesheet">
+        #smile {
+            width: 480px;
+            height: 480px;
+            background-image: url("smile.jpg");
+        }
+    </style>
+</head>
+<body>
+<div id="smile"></div>
+<button id="get_smile">Give me a smile!</button>
+</body>
+<script>
+    var smile_pic = document.querySelector("#smile");
+    var button = document.querySelector("#get_smile");
+    var position_y = 0;
+    smile_pic.style.backgroundPositionY = position_y + "px";
+    var is_smiling = false;
+    var timer;
+
+    function moveBackgroundImage() {
+        position_y -= 480;
+        smile_pic.style.backgroundPositionY = position_y + "px";
+        if (position_y == -7680) { // 让动画循环播放，不过 background-repeat 默认值是 repeat，其实并不需要这一条判断语句
+            position_y = 480;
+        }
+    }
+
+    button.onclick = function () {
+        if (is_smiling) {
+            clearInterval(timer);
+            button.innerHTML = "Give me a smile!";
+            is_smiling = false;
+        } else {
+            timer = setInterval(moveBackgroundImage, 50);
+            button.innerHTML = "Stop smiling!";
+            is_smiling = true;
+        }
+    }
+</script>
+</html>

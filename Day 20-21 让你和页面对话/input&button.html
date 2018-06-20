@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Input & Button</title>
+</head>
+<body>
+<input id="name" type="text">
+<button id="submit-btn">Submit</button>
+<script>
+    function consoleOutput() {
+        console.log(document.querySelector("#name").value);
+    }
+
+    function keyPressListener(e) {
+        e = e || window.event;
+        if (e.key == "Enter") {
+            consoleOutput();
+        } else if (e.key == "Escape" || e.key == "Esc") {
+            document.querySelector("#name").value = "";
+        }
+    }
+
+    document.querySelector("#submit-btn").onclick = consoleOutput;
+    window.onkeydown = keyPressListener;
+</script>
+</body>
+</html>

@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Time Effect</title>
+</head>
+<body>
+<div id="fade-obj" style="width:300px;height:300px;background:#000"></div>
+<button id="fade-btn">淡出</button>
+<script>
+    var object = document.querySelector("#fade-obj");
+    var button = document.querySelector("#fade-btn");
+    object.style.opacity = 1; // 给对象添加默认 inline-style
+
+    var timer;
+
+    function fadeOut() {
+        object.style.opacity = Number(object.style.opacity) - 0.01;
+        if (object.style.opacity <= 0) { // 避免 JS 浮点数精度问题
+            clearInterval(timer);
+            button.disabled = false;
+            button.innerHTML = "淡入";
+        }
+    }
+
+    function fadeIn() {
+        object.style.opacity = Number(object.style.opacity) + 0.01;
+        if (object.style.opacity >= 1) {
+            clearInterval(timer);
+            button.disabled = false;
+            button.innerHTML = "淡出";
+        }
+    }
+
+    document.querySelector("#fade-btn").onclick = function () {
+        if (object.style.opacity >= 1) {
+            timer = setInterval(fadeOut, 20);
+        }
+        else if (object.style.opacity <= 0) {
+            timer = setInterval(fadeIn, 20);
+        }
+        button.disabled = true;
+    }
+    /* setTimeout 写法
+     * ---------------
+    function fadeOut() {
+        object.style.opacity = Number(object.style.opacity) - 0.01;
+        if (object.style.opacity <= 0) { // 避免 JS 浮点数精度问题
+            button.disabled = false;
+            button.innerHTML = "淡入";
+        } else {
+            setTimeout(fadeOut, 20);
+        }
+    }
+
+    function fadeIn() {
+        object.style.opacity = Number(object.style.opacity) + 0.01;
+        if (object.style.opacity >= 1) {
+            button.disabled = false;
+            button.innerHTML = "淡出";
+        } else {
+            setTimeout(fadeIn, 20);
+        }
+    }
+
+    document.querySelector("#fade-btn").onclick = function () {
+        if (object.style.opacity >= 1) {
+            setTimeout(fadeOut, 20);
+        }
+        else if (object.style.opacity <= 0) {
+            setTimeout(fadeIn, 20);
+        }
+        button.disabled = true;
+    }
+    * --------------
+    */
+</script>
+</body>
+</html>
