@@ -34,10 +34,12 @@
 
 <script>
     document.querySelector("ul.palette").onclick = function (e) {
-        var color = e.target.style.backgroundColor;
-        var p = document.querySelector("p.color-picker");
-        p.innerHTML = color;
-        p.style.color = color;
+        if (e.target && e.target.nodeName.toUpperCase() == "LI") {
+            var color = e.target.style.backgroundColor;
+            var p = document.querySelector("p.color-picker");
+            p.innerHTML = color;
+            p.style.color = color;
+        }
     }
 </script>
 </body>
