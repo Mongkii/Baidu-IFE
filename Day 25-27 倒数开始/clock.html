@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Clock</title>
+</head>
+<body>
+<h1>现在的时间</h1>
+<p id="time_display"></p>
+<script>
+    function fillNumber(num) {
+        if (num < 10) {
+            return ("0" + num);
+        } else return ("" + num);
+    }
+
+    function formatDay(num, language) { // 为了练习，这里与下面的函数分别采用数组和对象处理多语言
+        var day = [
+            ["星期日", "Sunday"],
+            ["星期一", "Monday"],
+            ["星期二", "Tuesday"],
+            ["星期三", "Wednesday"],
+            ["星期四", "Thursday"],
+            ["星期五", "Friday"],
+            ["星期六", "Saturday"]
+        ]
+        if (language == "CN") {
+            return day[num][0];
+        } else if (language == "EN") {
+            return day[num][1];
+        }
+    }
+
+    function formatTime(hh, mm, ss, language, rule) {
+        rule = String(rule); // 避免格式出错导致的问题
+        var sign_group = [
+            { // 缺省值
+                "CN": "",
+                "EN": ""
+            },
+            {
+                "CN": "上午",
+                "EN": "AM"
+            },
+            {
+                "CN": "下午",
+                "EN": "PM"
+            }
+        ];
+        var sign = sign_group[0];
+        if (rule == "12") {
+            if (hh > 12) {
+                hh -= 12;
+                hh = fillNumber(hh);
+                sign = sign_group[2];
+            } else if (hh == 12) {
+                hh = fillNumber(hh);
+                sign = sign_group[2];
+            } else {
+                hh = fillNumber(hh);
+                sign = sign_group[1];
+            }
+        }
+        mm = fillNumber(mm);
+        ss = fillNumber(ss);
+        if (language == "CN") {
+            return sign[language] + " " + hh + ":" + mm + ":" + ss;
+        } else if (language == "EN") {
+            return hh + ":" + mm + ":" + ss + " " + sign[language];
+        }
+    }
+
+    function formatFullDate(full_time, language, rule) {
+        language = language.toUpperCase();
+        var year = "" + full_time.getFullYear();
+        var month = fillNumber(full_time.getMonth() + 1);
+        var date = fillNumber(full_time.getDate());
+        var day = formatDay(full_time.getDay(), language);
+        var time = formatTime(full_time.getHours(), full_time.getMinutes(), full_time.getSeconds(), language, rule);
+        if (language == "CN") {
+            return (year + " 年 " + month + " 月 " + date + " 日 " + day + " " + time);
+        } else if (language == "EN") {
+            return (year + "-" + month + "-" + date + " " + day + " " + time);
+        }
+    }
+
+    function getCurrentTime(language, rule) {
+        var time = new Date();
+        return formatFullDate(time, language, rule);
+    }
+
+    var p = document.querySelector("#time_display");
+    var timer = setInterval("p.innerText = getCurrentTime('CN','24') + '\\n' + getCurrentTime('EN','12')", 500);
+</script>
+</body>
+</html>

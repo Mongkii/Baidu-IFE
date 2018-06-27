@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Select Date</title>
+</head>
+<body>
+<div id="select-panel">
+    <select id="year-select"></select>
+    <select id="month-select"></select>
+    <select id="day-select"></select>
+    <select id="hour-select"></select>
+    <select id="minute-select"></select>
+    <select id="second-select"></select>
+</div>
+<p id="result-wrapper"></p>
+<script>
+    var year_select = document.querySelector("#year-select"),
+        month_select = document.querySelector("#month-select"),
+        day_select = document.querySelector("#day-select"),
+        hour_select = document.querySelector("#hour-select"),
+        minute_select = document.querySelector("#minute-select"),
+        second_select = document.querySelector("#second-select"),
+        select_panel = document.querySelector("#select-panel");
+
+    function addOption(target, start, end) {
+        start = parseInt(start);
+        end = parseInt(end);
+        for (var i = start; i < (end + 1); i++) {
+            var option = document.createElement("option");
+            option.value = "" + i;
+            option.innerHTML = i;
+            target.appendChild(option);
+        }
+    }
+
+    function initializeSelect() {
+        addOption(year_select, 2000, 2032);
+        addOption(month_select, 1, 12);
+        addOption(day_select, 1, 31);
+        addOption(hour_select, 0, 23);
+        addOption(minute_select, 0, 59);
+        addOption(second_select, 0, 59);
+        rationalityCheck();
+    }
+
+    function rationalityCheck() {
+        // 初始化 29，30，31 日显示样式
+        day_select[28].style = "";
+        day_select[29].style = "";
+        day_select[30].style = "";
+
+        var month_without_31_days = [2, 4, 6, 9, 11];
+        for (x in month_without_31_days) {
+            if (month_select.value == month_without_31_days[x]) {
+                day_select[30].style.display = "none";
+                break;
+            }
+        }
+        if (month_select.value == 2) {
+            day_select[29].style.display = "none";
+            if (year_select.value % 4 != 0 || (year_select.value % 100 == 0 && year_select.value % 400 != 0)) {
+                day_select[28].style.display = "none";
+            }
+        }
+    }
+
+    function formatTimeinMs(time_ms) {
+        var calc_day = 24 * 60 * 60 * 1000,
+            calc_hour = 60 * 60 * 1000,
+            calc_minute = 60 * 1000,
+            calc_second = 1000;
+        var out_day = parseInt(time_ms / calc_day);
+        time_ms = time_ms % calc_day;
+        var out_hour = parseInt(time_ms / calc_hour);
+        time_ms = time_ms % calc_hour;
+        var out_minute = parseInt(time_ms / calc_minute);
+        time_ms = time_ms % calc_minute;
+        var out_second = parseInt(time_ms / calc_second);
+        return (out_day + " 天 " + out_hour + " 小时 " + out_minute + " 分 " + out_second + " 秒");
+    }
+
+    function fillNumber(num) {
+        if (num < 10) {
+            return ("0" + num);
+        } else return ("" + num);
+    }
+
+    function formatDay(num) { // 为了练习，这里与下面的函数分别采用数组和对象处理多语言
+        var day = ["星期日", "星期一", "星期二", "星期三", "星期四", "星期五", "星期六"];
+        return day[num];
+    }
+
+    function formatFullDate(full_time) {
+        var year = "" + full_time.getFullYear(),
+            month = "" + (full_time.getMonth() + 1),
+            date = "" + full_time.getDate(),
+            day = formatDay(full_time.getDay()),
+            hh = fillNumber(full_time.getHours()),
+            mm = fillNumber(full_time.getMinutes()),
+            ss = fillNumber(full_time.getSeconds());
+
+        return (year + " 年 " + month + " 月 " + date + " 日 " + day + " " + hh + ":" + mm + ":" + ss);
+    }
+
+    function calculateDate() {
+        var year = year_select.value,
+            month = month_select.value,
+            date = day_select.value,
+            hour = hour_select.value,
+            minute = minute_select.value,
+            second = second_select.value;
+
+        var selected_date = new Date(year, (month-1), date, hour, minute, second),
+            now_date = new Date();
+        var date_differ = selected_date - now_date;
+        var differ_status = "";
+
+        if (date_differ > 0) {
+            differ_status = "还有";
+        } else {
+            differ_status = "已经过去";
+            date_differ = Math.abs(date_differ);
+        }
+        var selected_date_formatted = formatFullDate(selected_date);
+        var date_differ_formatted = formatTimeinMs(date_differ);
+        return ("现在距离 " + selected_date_formatted + " " + differ_status + " " + date_differ_formatted);
+    }
+
+    initializeSelect();
+    var timer = setInterval("document.querySelector('#result-wrapper').innerText = calculateDate()", 500)
+
+    select_panel.onchange = function (e) {
+        rationalityCheck();
+    }
+</script>
+</body>
+</html>
