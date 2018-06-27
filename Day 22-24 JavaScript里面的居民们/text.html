@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Text</title>
+</head>
+<body>
+<div>
+    <label>String A:
+        <input id="radio-a" type="radio" checked="true" name="str-obj" value="a">
+    </label>
+    <textarea id="str-a"></textarea>
+    <label>String B:
+        <input id="radio-b" type="radio" name="str-obj" value="b">
+    </label>
+    <textarea id="str-b"></textarea>
+    <label>Num A：<input id="num-a" type="number" value="0"></label>
+    <label>Num B：<input id="num-b" type="number" value="1"></label>
+</div>
+<div>
+    <button id="length">获取当前选中输入的内容长度</button>
+    <button id="sub_letter">当前选中输入中的第3个字符</button>
+    <button id="concat">把两个输入框的文字连接在一起输出（concat）</button>
+    <button id="index_of">输入B中的内容，在输入A的内容中第一次出现的位置（indexOf）</button>
+    <button id="last_index_of">输入A中的内容，在输入B的内容中最后一次出现的位置（lastIndexOf）</button>
+    <button id="slice">使用slice获取选中输入框内容的部分内容，参数为num-a及num-b</button>
+    <button id="count_line">当前选中输入框的行数</button>
+    <button id="substr">使用substr获取选中输入框内容的子字符串，参数为num-a及num-b</button>
+    <button id="to_upper_case">把所选输入框中的内容全部转为大写</button>
+    <button id="to_lower_case">把所选输入框中的内容全部转为小写</button>
+    <button id="clear_space">把所选输入框中内容的半角空格全部去除</button>
+    <button id="replace">把所选输入框中内容的a全部替换成另外一个输入框中的内容</button>
+</div>
+<p id="result"></p>
+<script>
+    var radio_a = document.querySelector("#radio-a"),
+        radio_b = document.querySelector("#radio-b"),
+        str_a = document.querySelector("#str-a"),
+        str_b = document.querySelector("#str-b"),
+        num_a = document.querySelector("#num-a"),
+        num_b = document.querySelector("#num-b"),
+        p = document.querySelector("#result");
+
+    str_a.onfocus = function () {
+        radio_a.checked = true;
+    }
+    str_b.onfocus = function () {
+        radio_b.checked = true;
+    }
+
+    function isABAvailable() {
+        if (isNaN(num_a.value) || num_a.value == "" || isNaN(num_b.value) || num_b.value == "") {
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+    function chooseAndRun(func) {
+        if (radio_a.checked) {
+            func(str_a.value);
+        } else if (radio_b.checked) {
+            func(str_b.value);
+        } else {
+            p.innerHTML = "请先选择一个输入框";
+        }
+    }
+
+    document.querySelector("#length").onclick = function () {
+        function getLength(str) {
+            p.innerHTML = str.length;
+        }
+
+        chooseAndRun(getLength);
+    }
+
+    document.querySelector("#sub_letter").onclick = function () {
+        function getSubLetter(str) {
+            p.innerHTML = (str[2] || "字符串长度小于 3");
+        }
+
+        chooseAndRun(getSubLetter);
+    }
+
+    document.querySelector("#concat").onclick = function () {
+        p.innerHTML = str_a.value.concat(str_b.value);
+    }
+
+    document.querySelector("#index_of").onclick = function () {
+        p.innerHTML = str_a.value.indexOf(str_b.value);
+    }
+
+    document.querySelector("#last_index_of").onclick = function () {
+        p.innerHTML = str_b.value.lastIndexOf(str_a.value);
+    }
+
+    document.querySelector("#slice").onclick = function () {
+        function getSlice(str) {
+            p.innerHTML = str.slice(parseInt(num_a.value), parseInt(num_b.value));
+        }
+
+        if (isABAvailable()) {
+            chooseAndRun(getSlice);
+        }
+        else {
+            p.innerHTML = "请在 A、B 数字框中正确输入数字";
+        }
+    }
+
+    document.querySelector("#count_line").onclick = function () {
+        function lineCount(str) {
+            var next_line_match = str.match(/\n/g);
+            var next_line_count = (next_line_match) ? (next_line_match.length + 1) : 1; // 只有一行时，String.match() 返回值为 null
+            p.innerHTML = "此输入框共 " + next_line_count + " 行";
+        }
+
+        chooseAndRun(lineCount);
+    }
+
+    document.querySelector("#substr").onclick = function () {
+        function getSubStr(str) {
+            p.innerHTML = str.substr(parseInt(num_a.value), parseInt(num_b.value));
+            if (str.length < parseInt(num_b.value)) {
+                console.log("字符串长度小于目标截取长度");
+            }
+        }
+
+        if (isABAvailable()) {
+            chooseAndRun(getSubStr);
+        }
+        else {
+            p.innerHTML = "请在 A、B 数字框中正确输入数字";
+        }
+    }
+
+    document.querySelector("#to_upper_case").onclick = function () {
+        function getUpperCase(str) {
+            p.innerHTML = str.toUpperCase();
+        }
+
+        chooseAndRun(getUpperCase);
+    }
+
+    document.querySelector("#to_lower_case").onclick = function () {
+        function getLowerCase(str) {
+            p.innerHTML = str.toLowerCase();
+        }
+
+        chooseAndRun(getLowerCase);
+    }
+
+    document.querySelector("#clear_space").onclick = function () {
+        function getNoSpace(str) {
+            p.innerHTML = str.replace(/\s/g, "");
+        }
+
+        chooseAndRun(getNoSpace);
+    }
+
+    document.querySelector("#replace").onclick = function () {
+        if (radio_a.checked) {
+            p.innerHTML = str_a.value.replace(/a/g, str_b.value);
+        } else if (radio_b.checked) {
+            p.innerHTML = str_b.value.replace(/a/g, str_a.value);
+        } else {
+            p.innerHTML = "请先选择一个输入框";
+        }
+    }
+</script>
+</body>
+</html>

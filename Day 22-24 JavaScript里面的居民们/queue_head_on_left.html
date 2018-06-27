@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Queue</title>
+</head>
+<body>
+<input id="queue-input" type="text">
+<p id="queue-cont">队列内容：apple&lt;-pear</p>
+<button id="in-btn">入队</button>
+<button id="out-btn">出队</button>
+<button id="font-btn">打印队头元素内容</button>
+<button id="empty-btn">判断队列是否为空</button>
+
+<script>
+    var queue = ["apple", "pear"];
+    var input = document.querySelector("#queue-input"),
+        p = document.querySelector("#queue-cont");
+
+    document.querySelector("#in-btn").onclick = function () {
+        try {
+            if (input.value == "")
+                throw "请在输入框中输入内容";
+            queue.unshift(input.value);
+            p.innerHTML = input.value + " 已入队";
+        }
+        catch (e) {
+            p.innerHTML = e;
+        }
+    }
+
+    document.querySelector("#out-btn").onclick = function () {
+        try {
+            if (queue.length == 0)
+                throw "队列中没有元素";
+            p.innerHTML = queue.pop() + " 已出队";
+        }
+        catch (e) {
+            p.innerHTML = e;
+        }
+    }
+
+    document.querySelector("#font-btn").onclick = function () {
+        try {
+            if (queue.length == 0)
+                throw "队列中没有元素";
+            p.innerHTML = queue[0];
+        }
+        catch (e) {
+            p.innerHTML = e;
+        }
+    }
+
+    document.querySelector("#empty-btn").onclick = function () {
+        if (queue.length == 0) {
+            p.innerHTML = "队列为空";
+        }
+
+        else {
+            var list = "队列不为空。队列内容：";
+            list += queue.join("<-");
+            p.innerHTML = list;
+        }
+    }
+
+</script>
+</body>
+</html>

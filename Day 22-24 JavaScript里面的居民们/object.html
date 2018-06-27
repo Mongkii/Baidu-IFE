@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Object</title>
+    <style rel="stylesheet">
+        input {
+            display: block;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+<input type="text" placeholder="Type something here" id="input">
+<button id="search_name">Search name</button>
+<button id="search_id">Search id</button>
+<button id="dlr">DLR list</button>
+<button id="ldr">LDR list</button>
+<button id="lrd">LRD list</button>
+<p id="result">此处显示结果</p>
+<script>
+    var tree = {
+        "id": 0,
+        "name": "root",
+        "left": {
+            "id": 1,
+            "name": "Simon",
+            "left": {
+                "id": 3,
+                "name": "Carl",
+                "left": {
+                    "id": 7,
+                    "name": "Lee",
+                    "left": {
+                        "id": 11,
+                        "name": "Fate"
+                    }
+                },
+                "right": {
+                    "id": 8,
+                    "name": "Annie",
+                    "left": {
+                        "id": 12,
+                        "name": "Saber"
+                    }
+                }
+            },
+            "right": {
+                "id": 4,
+                "name": "Tony",
+                "left": {
+                    "id": 9,
+                    "name": "Candy"
+                }
+            }
+        },
+        "right": {
+            "id": 2,
+            "name": "right",
+            "left": {
+                "id": 5,
+                "name": "Carl",
+            },
+            "right": {
+                "id": 6,
+                "name": "Carl",
+                "right": {
+                    "id": 10,
+                    "name": "Kai"
+                }
+            }
+        }
+    }
+
+    // 假设id和name均不会重复，根据输入name找到对应的id
+    function findIdByName(name) {
+        var result_id = "未找到";
+
+        function search(node) {
+            if (node) {
+                if (node.name == name) {
+                    result_id = node.id;
+                }
+                search(node.left);
+                search(node.right);
+            }
+        }
+
+        search(tree);
+        return result_id;
+    }
+
+    // 假设id和name均不会重复，根据输入id找到对应的name
+    function findNameById(id) {
+        var result_name = "未找到";
+
+        function search(node) {
+            if (node) {
+                if (node.id == id) {
+                    result_name = node.name;
+                }
+                search(node.left);
+                search(node.right);
+            }
+        }
+
+        search(tree);
+        return result_name;
+    }
+
+    // 把这个对象中所有的名字以“前序遍历”的方式全部输出到console中
+    function getListWithDLR() {
+        var result = "";
+
+        function DLR_view(node) {
+            if (node) {
+                result += node.name + " ";
+                DLR_view(node.left);
+                DLR_view(node.right);
+            }
+        }
+
+        DLR_view(tree);
+        return result;
+    }
+
+    // 把这个对象中所有的名字以“中序遍历”的方式全部输出到console中
+    function getListWithLDR() {
+        var result = "";
+
+        function LDR_view(node) {
+            if (node) {
+                LDR_view(node.left);
+                result += node.name + " ";
+                LDR_view(node.right);
+            }
+        }
+
+        LDR_view(tree);
+        return result;
+    }
+
+    // 把这个对象中所有的名字以“后序遍历”的方式全部输出到console中
+    function getListWithLRD() {
+        var result = "";
+
+        function LRD_view(node) {
+            if (node) {
+                LRD_view(node.left);
+                LRD_view(node.right);
+                result += node.name + " ";
+            }
+        }
+
+        LRD_view(tree);
+        return result;
+    }
+
+    var input = document.querySelector("#input");
+    var p = document.querySelector("#result");
+
+    document.querySelector("#search_name").onclick = function () {
+        p.innerHTML = findIdByName(input.value);
+    }
+
+    document.querySelector("#search_id").onclick = function () {
+        p.innerHTML = findNameById(input.value);
+    }
+
+    document.querySelector("#dlr").onclick = function () {
+        p.innerHTML = getListWithDLR();
+    }
+
+    document.querySelector("#ldr").onclick = function () {
+        p.innerHTML = getListWithLDR();
+    }
+
+    document.querySelector("#lrd").onclick = function () {
+        p.innerHTML = getListWithLRD();
+    }
+</script>
+</body>
+</html>

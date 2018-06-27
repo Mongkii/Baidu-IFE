@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Number</title>
+</head>
+<body>
+<div>
+    <label>Number A:<input id="radio-a" type="radio" name="math-obj" value="a"></label><input id="num-a" type="text">
+    <label>Number B:<input id="radio-b" type="radio" name="math-obj" value="b"></label><input id="num-b" type="text">
+</div>
+<div>
+    <button id="is-number">判断当前选中的输入框输入内容是否为数字</button>
+    <button id="to-fixed">把 A 四舍五入为 B 个小数位数的数字</button>
+    <button id="abs">当前选中数字的绝对值</button>
+    <button id="ceil">对当前选中的数字进行上舍入</button>
+    <button id="floor">对当前选中的数字进行下舍入</button>
+    <button id="round">把当前选中的数字四舍五入为最接近的整数</button>
+    <button id="max">返回 A 和 B 中的最高值</button>
+    <button id="min">返回 A 和 B 中的最低值</button>
+</div>
+<p id="result"></p>
+<script>
+    var radio_a = document.querySelector("#radio-a"),
+        radio_b = document.querySelector("#radio-b"),
+        num_a = document.querySelector("#num-a"),
+        num_b = document.querySelector("#num-b"),
+        p = document.querySelector("#result");
+
+    num_a.onfocus = function () {
+        radio_a.checked = true;
+    }
+    num_b.onfocus = function () {
+        radio_b.checked = true;
+    }
+
+    function chooseAndRun(func) { // 省去了在每个 button 事件中都要判断被选中 radio 的情况，后期增删 radio 也容易维护
+        try {
+            if (radio_a.checked) {
+                if (isNaN(num_a.value) || num_a.value == "")
+                    throw "输入内容不是数字";
+                func(Number(num_a.value));
+            } else if (radio_b.checked) {
+                if (isNaN(num_b.value) || num_b.value == "")
+                    throw "输入内容不是数字";
+                func(Number(num_b.value));
+            } else throw "请先选择一个输入框";
+        }
+        catch (e) {
+            p.innerHTML = e;
+        }
+    }
+
+    function allToRun(func) { //省去在每个 button 事件中都要判断输入和 catch error 的情况
+        try {
+            if (isNaN(num_a.value) || num_a.value == "" || isNaN(num_b.value) || num_b.value == "")
+                throw "请在 A、B 框中正确输入数字！";
+            func(Number(num_a.value), Number(num_b.value));
+        }
+        catch (e) {
+            p.innerHTML = e;
+        }
+    }
+
+    document.querySelector("#is-number").onclick = function () {
+        function isNumber() {
+            p.innerHTML = "输入内容为数字";
+        }
+
+        chooseAndRun(isNumber);
+    }
+
+    document.querySelector("#to-fixed").onclick = function () {
+        function toFixed(num_1, num_2) {
+            p.innerHTML = num_1.toFixed(num_2);
+        }
+
+        allToRun(toFixed);
+
+        /* 这里可经一步压缩，将整段代码块写做：
+
+        allToRun(function (num_1, num_2) {
+            p.innerHTML = num_1.toFixed(num_2);
+        })
+
+        考虑到可读性和可修改性，没有这么做
+         */
+    }
+
+    document.querySelector("#abs").onclick = function () {
+        function abs(num) {
+            p.innerHTML = Math.abs(num);
+        }
+
+        chooseAndRun(abs);
+    }
+
+    document.querySelector("#ceil").onclick = function () {
+        function ceil(num) {
+            p.innerHTML = Math.ceil(num);
+        }
+
+        chooseAndRun(ceil);
+    }
+
+    document.querySelector("#floor").onclick = function () {
+        function floor(num) {
+            p.innerHTML = Math.floor(num);
+        }
+
+        chooseAndRun(floor);
+    }
+
+    document.querySelector("#round").onclick = function () {
+        function round(num) {
+            p.innerHTML = Math.round(num);
+        }
+
+        chooseAndRun(round);
+    }
+
+    document.querySelector("#max").onclick = function () {
+        function max(num_1, num_2) {
+            p.innerHTML = Math.max(num_1, num_2);
+        }
+
+        allToRun(max);
+    }
+
+    document.querySelector("#min").onclick = function () {
+        function min(num_1, num_2) {
+            p.innerHTML = Math.min(num_1, num_2);
+        }
+
+        allToRun(min);
+    }
+</script>
+</body>
+</html>

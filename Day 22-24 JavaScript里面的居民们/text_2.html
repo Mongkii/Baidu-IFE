@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Text 2</title>
+</head>
+<body>
+See console for the results.
+<script>
+    /*
+    实现一个字符串头尾去除空格的函数
+    注意需要去除的空格，包括全角、半角空格
+    暂时不需要学习和使用正则表达式的方式
+    */
+    function diyTrim(str) {
+        var result = "";
+        var str_to_array = str.split("");
+        while (str_to_array.length != 0) {
+            if (str_to_array[0] == " " || str_to_array[0] == "　") {
+                str_to_array.splice(0, 1);
+            } else break;
+        }
+        var i = str_to_array.length - 1;
+        while (i != 0) {
+            if (str_to_array[i] == " " || str_to_array[i] == "　") {
+                str_to_array.splice(i, 1);
+                i -= 1; //使 i 始终指向数组最后一位
+            } else break;
+        }
+        result = str_to_array.join("");
+        return result;
+    }
+
+    // 测试用例
+    console.log(diyTrim(' a f b    ')); // ->a f b
+    console.log(diyTrim('    ffdaf    ')); // ->ffdaf
+    console.log(diyTrim('1    ')); // ->1
+    console.log(diyTrim('　　f')); // ->f
+    console.log(diyTrim('  　  a f b 　　 ')); // ->a f b
+    console.log(diyTrim(' ')); // ->
+    console.log(diyTrim('　')); // ->
+    console.log(diyTrim('')); // ->
+
+    /*
+    去掉字符串str中，连续重复的地方
+    */
+    function removeRepetition(str) {
+        var result = "";
+        var str_to_array = str.split("");
+        for (var i = 1; i < str_to_array.length; i++) {
+            if (str_to_array[i] == str_to_array[i - 1]) {
+                str_to_array.splice(i, 1);
+                i -= 1; // 数组后一个元素被往前推，因此这里要保持 i 不动才能正确获取下一个元素
+            }
+        }
+        result = str_to_array.join("");
+        return result;
+    }
+
+    // 测试用例
+    console.log(removeRepetition("aaa")); // ->a
+    console.log(removeRepetition("abbba")); // ->aba
+    console.log(removeRepetition("aabbaabb")); // ->abab
+    console.log(removeRepetition("")); // ->
+    console.log(removeRepetition("abc")); // ->abc
+</script>
+</body>
+</html>

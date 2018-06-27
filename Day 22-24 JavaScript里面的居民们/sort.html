@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Sort</title>
+    <style rel="stylesheet">
+        pre {
+            width: fit-content;
+            background-color: #f0f0f0;
+            padding: 20px;
+        }
+    </style>
+</head>
+<body>
+<pre>
+arr_1 = [43, 54, 4, -4, 84, 100, 58, 27, 140];
+
+arr_2 = ['apple', 'dog', 'cat', 'car', 'zoo', 'orange', 'airplane'];
+
+arr_3 = [[10, 14], [16, 60], [7, 44], [26, 35], [22, 63]];
+
+arr_4 = [
+    {
+        id: 1,
+        name: 'candy',
+        value: 40
+    }, {
+        id: 2,
+        name: 'Simon',
+        value: 50
+    }, {
+        id: 3,
+        name: 'Tony',
+        value: 45
+    }, {
+        id: 4,
+        name: 'Annie',
+        value: 60
+    }
+];
+</pre>
+<button id="sort_1">Sort arr_1</button>
+<button id="sort_2">Sort arr_2</button>
+<button id="sort_3">Sort arr_3</button>
+<button id="sort_4">Sort arr_4</button>
+<label><input type="radio" id="radio_decrease" name="sort_method" checked>从大到小</label>
+<label><input type="radio" id="radio_increase" name="sort_method">从小到大</label>
+<p id="result">此处显示结果</p>
+<script>
+    var p = document.querySelector("#result");
+    var decrease_sign = document.querySelector("#radio_decrease");
+
+    document.querySelector("#sort_1").onclick = function () {
+        var arr = [43, 54, 4, -4, 84, 100, 58, 27, 140];
+
+        function sortNumber(a, b) {
+            return a - b;
+        }
+
+        if (decrease_sign.checked) {
+            p.innerHTML = "[" + arr.sort(sortNumber).reverse().join(", ") + "]";
+        } else {
+            p.innerHTML = "[" + arr.sort(sortNumber).join(", ") + "]";
+        }
+    }
+    document.querySelector("#sort_2").onclick = function () {
+        var arr = ['apple', 'dog', 'cat', 'car', 'zoo', 'orange', 'airplane'];
+
+        function sortLetter(a, b) {
+            return a.toUpperCase() > b.toUpperCase();
+        }
+
+        if (decrease_sign.checked) {
+            p.innerHTML = "[" + arr.sort(sortLetter).reverse().join(", ") + "]";
+        } else {
+            p.innerHTML = "[" + arr.sort(sortLetter).join(", ") + "]";
+        }
+    }
+    document.querySelector("#sort_3").onclick = function () {
+        var arr = [[10, 14], [16, 60], [7, 44], [26, 35], [22, 63]];
+
+        function sortArray(a, b) {
+            return a[1] - b[1];
+        }
+
+        if (decrease_sign.checked) {
+            p.innerHTML = "[[" + arr.sort(sortArray).reverse().join("], [") + "]]";
+        } else {
+            p.innerHTML = "[[" + arr.sort(sortArray).join("], [") + "]]";
+        }
+    }
+    document.querySelector("#sort_4").onclick = function () {
+        var arr = [
+            {
+                id: 1,
+                name: 'candy',
+                value: 40
+            }, {
+                id: 2,
+                name: 'Simon',
+                value: 50
+            }, {
+                id: 3,
+                name: 'Tony',
+                value: 45
+            }, {
+                id: 4,
+                name: 'Annie',
+                value: 60
+            }
+        ];
+        var list = "";
+        var temp_array = new Array();
+
+        function sortObject(a, b) {
+            return a.value - b.value;
+
+        }
+
+        if (decrease_sign.checked) {
+            temp_array = arr.sort(sortObject).reverse();
+            for (x in temp_array) {
+                list += "name: " + temp_array[x].name + ", value: " + temp_array[x].value + "\n";
+            }
+            p.innerText = list; // 为了正常显示换行符，这里用的是 innerText 而非 innerHTML
+        } else {
+            temp_array = arr.sort(sortObject);
+            for (x in temp_array) {
+                list += "name: " + temp_array[x].name + ", value: " + temp_array[x].value + "\n";
+            }
+            p.innerText = list;
+        }
+    }
+</script>
+</body>
+</html>
