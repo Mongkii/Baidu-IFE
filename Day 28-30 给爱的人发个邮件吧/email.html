@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Mail</title>
+    <style rel="stylesheet">
+        html, body {
+            height: 100%;
+        }
+
+        body {
+            margin: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .input-box h1 {
+            margin: 0 0 5px;
+            font-size: 20px;
+            text-align: center;
+        }
+
+        .wrapper {
+            width: 300px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        #email-input {
+            box-sizing: border-box;
+            width: 100%;
+            height: 30px;
+            border: 1px solid #e1e1e1;
+            outline: none;
+        }
+
+        #email-sug-wrapper {
+            box-sizing: border-box;
+            list-style-type: none;
+            padding: 0;
+            margin: -1px 0 0; /* 使两个框相交的边线能重合 */
+            border: 1px solid #e1e1e1;
+            position: absolute;
+            top: 30px;
+            left: 0;
+            width: 100%;
+        }
+
+        #email-sug-wrapper li, #email-input {
+            padding-left: 10px;
+            font-size: 1em;
+        }
+
+        #email-sug-wrapper li:hover {
+            background-color: #aaaaaa;
+            color: #ffffff;
+        }
+
+        .key_select {
+            background-color: #aaccff;
+            list-style-type: square;
+        }
+
+    </style>
+</head>
+<body>
+<div class="input-box">
+    <h1>Type your E-mail address here:</h1>
+    <div class="wrapper">
+        <input id="email-input" type="text" autofocus>
+        <ul id="email-sug-wrapper" class="email-sug"></ul>
+    </div>
+</div>
+<script>
+    var email_input = document.querySelector("#email-input"),
+        email_sug = document.querySelector("#email-sug-wrapper");
+
+    var select_index = 0;
+
+    var postfixList = ['163.com', 'gmail.com', '126.com', 'qq.com', '263.net'];
+
+    function HTMLEncode(str) { // 若实际操作这些内容的地方都用 innerText，就无需这两个转码和解码函数了
+        var temp = document.createElement("div");
+        temp.innerText = str;
+        return temp.innerHTML;
+    }
+
+    function HTMLDecode(str) {
+        var temp = document.createElement("div");
+        temp.innerHTML = str;
+        return temp.innerText;
+    }
+
+    function formatInput(str) {
+        str = str.trim();
+        str = HTMLEncode(str);
+        return str;
+    }
+
+    function addSuggestItem(str) {
+        var x;
+        email_sug.innerHTML = ""; // 先清空建议列表
+
+        var sign_index = str.indexOf("@");
+        var str_front = "", str_end = "";
+
+        if (sign_index < 0) { // 没有 @
+            str_front = str;
+        } else if (sign_index == 0) { // @ 在第一位
+            str_end = str.slice(1);
+        } else {
+            str_front = str.slice(0, sign_index); // 一般情况
+            str_end = str.slice(sign_index + 1);
+        }
+
+        for (x in postfixList) {
+            if (postfixList[x].indexOf(str_end) == 0) {
+                var new_item = document.createElement("li");
+                new_item.innerHTML = str_front + "@" + postfixList[x];
+                email_sug.appendChild(new_item);
+            }
+        }
+
+        if (email_sug.innerHTML == "") { // 若"@"没有匹配结果的处理
+            for (x in postfixList) {
+                var new_item = document.createElement("li");
+                new_item.innerHTML = str_front + "@" + postfixList[x];
+                email_sug.appendChild(new_item);
+            }
+        }
+    }
+
+    function keySelectListItem(index) {
+        var list_item = email_sug.children;
+        for (var x in list_item) { // 清除其他选项的 class
+            list_item[x].className = "";
+        }
+        list_item[index].className = "key_select";
+    }
+
+    function putItemInInput(item) {
+        email_input.value = HTMLDecode(item.innerHTML);
+        email_input.focus();
+        hideSuggestion();
+    }
+
+
+    function showSuggestion() {
+        email_sug.style.display = "";
+        select_index = 0;
+        keySelectListItem(select_index);
+    }
+
+    function hideSuggestion() {
+        email_sug.style.display = "none";
+    }
+
+    /* oninput，onkeypress，onkeyup，onkeydown 区别：
+       oninput 不能识别 ESC、方向键和回车（只对字母数字有反应），可识别连打
+       onkeypress 不能识别连打，不能识别 ESC 和方向键
+       onkeyup 不能识别连打，会在点击输入框，产生焦点时，多运行一次函数。因为只在按键弹起时才响应，当使用 CTRL-X、CTRL-V 操作内容时，会出现延迟
+       onkeydown 能识别连打，但遇到 macOS 长按字母输入特殊符号这种情况时，会将其误作为连打判断。不会多运行函数，但函数是在按键按下时运行，即函数运行时，这一次按键产生的输入内容还没到达函数，即输入有延迟。
+       综合考虑，匹配邮箱列表时采用 oninput，需要操作邮箱列表时采用 onkeydown
+     */
+    email_input.oninput = function (e) {
+        var raw_input = formatInput(e.target.value);
+        if (raw_input == "") {
+            hideSuggestion();
+        }
+        else {
+            addSuggestItem(raw_input);
+            showSuggestion();
+        }
+    }
+
+    email_sug.onclick = function (e) {
+        if (e.target && e.target.nodeName.toUpperCase() == "LI") {
+            putItemInInput(e.target);
+        }
+    }
+
+    email_input.onkeydown = function (e) {
+        if (email_sug.style.display != "none") { // 只在有提示框时生效
+            switch (e.key) {
+                case "ArrowUp":
+                    select_index -= 1;
+                    if (select_index < 0) {
+                        select_index = email_sug.children.length - 1;
+                    }
+                    keySelectListItem(select_index);
+                    break;
+                case "ArrowDown":
+                    select_index += 1;
+                    if (select_index >= email_sug.children.length) {
+                        select_index = 0;
+                    }
+                    keySelectListItem(select_index);
+                    break;
+                case "Enter":
+                    putItemInInput(email_sug.children[select_index]);
+                    break;
+                case ("Escape" || "Esc"):
+                    email_input.select();
+                    hideSuggestion();
+                    break;
+            }
+        }
+    }
+
+    email_sug.style.display = "none"; // 设置初始状态下隐藏提示框
+</script>
+</body>
+</html>
