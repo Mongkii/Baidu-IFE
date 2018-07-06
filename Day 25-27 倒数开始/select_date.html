@@ -51,7 +51,7 @@
         day_select.children[30].style = "";
 
         var month_without_31_days = [2, 4, 6, 9, 11];
-        for (x in month_without_31_days) {
+        for (var x in month_without_31_days) {
             if (month_select.value == month_without_31_days[x]) {
                 day_select.children[30].style.display = "none";
                 break;

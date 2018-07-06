@@ -12,7 +12,7 @@ See console for the results.
     注意需要去除的空格，包括全角、半角空格
     暂时不需要学习和使用正则表达式的方式
     */
-    function diyTrim(str) {
+    function diyTrim(str) { // 若非题目要求，直接使用 trim() 方法更容易
         var result = "";
         var str_to_array = str.split("");
         while (str_to_array.length != 0) {
