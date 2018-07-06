@@ -46,24 +46,47 @@
 
     function rationalityCheck() {
         // 初始化 29，30，31 日显示样式
-        day_select[28].style = "";
-        day_select[29].style = "";
-        day_select[30].style = "";
+        day_select.children[28].style = "";
+        day_select.children[29].style = "";
+        day_select.children[30].style = "";
 
         var month_without_31_days = [2, 4, 6, 9, 11];
         for (x in month_without_31_days) {
             if (month_select.value == month_without_31_days[x]) {
-                day_select[30].style.display = "none";
+                day_select.children[30].style.display = "none";
                 break;
             }
         }
         if (month_select.value == 2) {
-            day_select[29].style.display = "none";
+            day_select.children[29].style.display = "none";
             if (year_select.value % 4 != 0 || (year_select.value % 100 == 0 && year_select.value % 400 != 0)) {
-                day_select[28].style.display = "none";
+                day_select.children[28].style.display = "none";
             }
         }
     }
+
+/* 在 IE 及 Safari 上，option 的 style.display 设定无效，可以使用以下代码调整选项数量
+    function rationalityCheck() {
+        day_select.innerHTML = ""; // 清空列表
+
+        var month_with_30_days = [4, 6, 9, 11];
+        for (x in month_with_30_days) {
+            if (month_select.value == month_with_30_days[x]) {
+                addOption(day_select, 1, 30);
+                break;
+            }
+        }
+        if (month_select.value == 2) {
+            addOption(day_select, 1, 28);
+            if ((year_select.value % 4 == 0 && year_select.value % 100 != 0) || year_select.value % 400 == 0) {
+                addOption(day_select, 29, 29);
+            }
+        }
+        if (day_select.innerHTML == "") { // 其它情况
+            addOption(day_select, 1, 31);
+        }
+    }
+ */
 
     function formatTimeinMs(time_ms) {
         var calc_day = 24 * 60 * 60 * 1000,
@@ -128,10 +151,12 @@
     }
 
     initializeSelect();
-    var timer = setInterval("document.querySelector('#result-wrapper').innerText = calculateDate()", 500)
+    var timer = setInterval("document.querySelector('#result-wrapper').innerText = calculateDate()", 500);
 
     select_panel.onchange = function (e) {
-        rationalityCheck();
+        if (e.target && e.target.nodeName.toUpperCase() == "SELECT") {
+            rationalityCheck();
+        }
     }
 </script>
 </body>
