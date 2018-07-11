@@ -1,0 +1,624 @@
+/* Global Style */
+html, body {
+    height: 100%;
+}
+
+body {
+    margin: 0;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+ul {
+    padding-left: 0;
+    margin: 0;
+    list-style-type: none;
+}
+
+h5 {
+    font-size: 12px
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    margin: 0;
+    font-weight: normal;
+}
+
+hr {
+    border: none;
+    border-bottom: 1px solid;
+}
+
+/* 挪动--------------------------------------------------------------------------------------------------------------- */
+button {
+    padding: 0;
+    font-size: 0;  /* 将 img 因空格产生的空间除去 */
+    background: none;
+    border: none;
+    outline: none;
+}
+
+/* Status Style */
+.active {
+    position: relative;
+}
+
+.active::before {
+    content: url("resources/status_Active Highlight.png");
+    position: absolute;
+    left: -20px;
+    top: 0;
+    bottom: 0;
+    margin: auto;
+    height: 20px;
+}
+
+.menu_group .active::before {
+    left: -30px;
+}
+
+.selected {
+    font-weight: 700;
+}
+
+.name_with_unread_msg {
+    position: relative;
+    padding-left: 16px;
+    color: #2399f1;
+}
+
+.name_with_unread_msg::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 1px;
+    margin: auto 0;
+    width: 8px;
+    height: 8px;
+    border-radius: 4px;
+    background-color: #2399f1;
+}
+
+.message_unread {
+    margin-right: 50px; /* 为让不同宽度 p 的省略号使用相同样式，这里只能用 margin-right，不能用 padding-right */
+}
+
+.indicator {
+    position: absolute;
+    width: 24px;
+    height: 24px;
+    font-size: 14px;
+    line-height: 24px;
+    text-align: center;
+    border-radius: 12px;
+    color: #ffffff;
+}
+
+.i_unread {
+    background-color: #2da1f7;
+}
+
+.i_error {
+    background-color: #dd3b1f;
+}
+
+.contacts_list li.contact_active {
+    padding-left: 27px;
+    border-left: 3px solid #2399f1;
+}
+
+/* Person Info General Style */
+.person_info {
+    display: flex;
+    /* 仔细看图，图片与文字似乎不是严格居中。那么此处样式也可用 float + margin 处理 */
+    float: left;
+
+    align-items: center;
+}
+
+.title h5 {
+    margin: 0;
+    font-weight: 700;
+    font-size: 16px;
+}
+
+.title h6 {
+    font-size: 14px;
+    color: #b5b5b5;
+}
+
+/* Sidebar */
+aside {
+    float: left;
+    padding: 20px 0;
+    width: 100px;
+    height: 100%;
+    background-color: #1d2531;
+}
+
+.apps {
+    overflow: scroll;
+    padding: 0 20px; /* 左右两侧的 padding 样式在这里，而非在 aside 设置，为的是出现滚动条时，滚动条处于 aside 边缘（即 section.apps 右边缘），不会与图标重叠，视觉效果更好 */
+    height: calc(100% - 36px);
+}
+
+.apps li {
+    margin-bottom: 20px;
+    font-size: 0;
+}
+
+.bottom_menu {
+    position: fixed;
+    bottom: 20px;
+    left: 26px;
+    overflow: hidden;
+}
+
+.bottom_menu button {
+    float: left;
+    margin-right: 16px;
+}
+
+.apps div img, .bottom_menu div img {
+    display: block;
+}
+
+/* Menu */
+nav {
+    float: left;
+    width: 250px;
+    height: 100%;
+    padding: 30px 0 85px 0; /* 左右的 padding 在 section 里设置，除了优化进度条显示外。更重要的是 section 为 overflow: hidden，class="active" 如果不在界内，效果会被隐藏；padding-bottom 可避免列表项与底部进度条重合*/
+    background-color: #222c3c;
+}
+
+.menu_group {
+    height: 100%;
+    overflow: scroll; /* 避免缩短页面高度时，因列表长度超过页面高度，导致整个页面可以滚动的情况 */
+}
+
+.menu_group hr {
+    margin: 25px 30px;
+    border-bottom-color: #2c3545;
+}
+
+.menu_group section {
+    overflow: hidden;
+    padding: 0 30px;
+}
+
+.menu_group section button {
+    float: right;
+}
+
+.menu_group section h5 {
+    margin-bottom: 25px;
+    color: #5b6779;
+}
+
+.menu_group section ul {
+    margin-bottom: -25px;
+    font-size: 14px;
+    color: #b7c0cd;
+}
+
+.menu_group section li {
+    position: relative;
+    margin-bottom: 25px;
+}
+
+.list_with_icon li {
+    position: relative;
+    padding-left: 30px;
+}
+
+.list_with_icon li img {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    height: fit-content;
+    margin: auto 0;
+}
+
+/* 此处也可使用 float 定位，但由样式可见，当使用 float 时，为使得图片与文字居中，需要指定 line-height，会导致此处文字间隔与别处有差别，几张图片高度不同，要分别设置，很麻烦
+ * 还可使用 flex 的 align-items，以及 table-cell 的 vertical-align: middle; 但这需要给 html 多嵌套几层 div，影响可读性
+ * 搜索得知，还可使用 table-cell 的 vertical-align: middle; 但测试后发现这只能使 content 相对 div 居中，content 中各元素高度关系仍需单独设置
+
+.list_with_icon li {
+    line-height: 16px;
+    margin-left: 30px;
+    overflow: visible;
+}
+
+.list_with_icon li img {
+    float: left;
+    margin-left: -30px;
+}
+
+ */
+
+.menu_group .indicator {
+    right: 0;
+    top: 0;
+    bottom: 0;
+    margin: auto 0;
+}
+
+.menu_group .i_unread {
+    width: 32px;
+}
+
+.server_capacity {
+    position: fixed;
+    left: 100px;
+    bottom: 23px;
+    overflow: hidden;
+    padding: 0 30px;
+    width: 250px;
+    color: #ffffff;
+}
+
+.amount {
+    float: right;
+}
+
+.server_capacity h5 {
+    margin-bottom: 16px;
+    font-size: 14px;
+}
+
+.progress_bar {
+    height: 4px;
+    border-radius: 2px;
+    background-color: #2f3847;
+}
+
+.now_progress {
+    height: 100%;
+    width: calc(580 / 3200 * 100%);
+    border-radius: 2px;
+    background: linear-gradient(to right, #7a62e0, #9a90de);
+}
+
+/* Message Window - Header */
+main {
+    margin-left: 350px;
+    height: 100%;
+}
+
+main header {
+    height: 80px;
+    background-color: #ffffff;
+    border-bottom: 1px solid #e6e9ec;
+}
+
+main header h1 {
+    padding-left: 30px;
+    line-height: 80px;
+}
+
+.profile {
+    position: fixed;
+    top: 14px;
+    right: 30px;
+}
+
+.profile .person_info img {
+    margin-right: 16px;
+}
+
+.profile .title {
+    width: 124px;
+}
+
+.profile .title h5 {
+    color: #2399f1;
+}
+
+.dropdown {
+    float: left;
+    height: 50px;
+}
+
+/* Message Window - Contacts Window */
+.main_contents {
+    display: flex;
+    height: calc(100% - 80px);
+}
+
+.contacts_window {
+    flex: none;
+    width: 400px;
+    border-right: 1px solid #e6e9ec;
+    background-color: #ffffff;
+}
+
+.search_window {
+    position: relative;
+    height: 70px;
+    padding: 17px 30px;
+    border-bottom: 1px solid #e6e9ec;
+}
+
+.search_window input {
+    width: 340px;
+    height: 36px;
+    padding-left: 16px;
+    padding-right: 40px;
+    font-size: 14px;
+    border: 1px solid #e6e9ec;
+    border-radius: 4px;
+    outline: none;
+}
+
+.search_window button {
+    position: absolute;
+    right: 44px;
+    top: 0;
+    bottom: 0;
+    height: 16px;
+    margin: auto 0;
+}
+
+.contacts_list {
+    overflow: scroll;
+    height: calc(100% - 70px);
+}
+
+.contacts_list .person_info img {
+    margin-right: 20px;
+}
+
+.contacts_list li {
+    position: relative;
+    overflow: hidden;
+    height: 130px;
+    padding: 16px 20px 20px 30px;
+    border-bottom: 1px solid #e6e9ec;
+}
+
+.contacts_list .indicator {
+    right: 20px;
+    bottom: 27px;
+}
+
+.message_date {
+    float: right;
+    margin-top: 8px;
+    font-size: 14px;
+    line-height: 14px; /* 消除文字上下空隙，便于按设计稿量出的尺寸排版 */
+    color: #7f8fa4;
+}
+
+.contacts_list li p {
+    overflow: hidden;
+    position: relative;
+    height: 2.4em;
+    margin-top: 60px;
+    margin-bottom: 0;
+    font-size: 14px;
+    line-height: 1.2em;
+    color: #585d68;
+}
+
+.too_long::after { /* 因为无法简单通过 CSS 设置多于两行才显示省略号，只能为需要省略的段落单独添加一个类。如果 CSS 支持设置特定行的 line-height，省略号问题可完全用 CSS 解决（不使用 webkit 特有 CSS 的情况下） */
+    content: '...';
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    padding-left: 0.5em;
+    line-height: 1.4em;
+    background: linear-gradient(to right, rgba(255, 255, 255, 0), rgba(255, 255, 255, 1) 30%);
+    color: #585d68;
+}
+
+/* Message Window - Contacts Window */
+.chat_window {
+    flex: 1;
+    background-color: #ffffff;
+}
+
+.chat_window header {
+    overflow: hidden;
+    height: 70px;
+    border-bottom: 1px solid #e6e9ec;
+    padding-left: 28px;
+}
+
+.chat_window header h2 {
+    position: relative;
+    width: fit-content;
+    line-height: 70px;
+    font-weight: 700;
+}
+
+.status_online::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right: -18px;
+    width: 8px;
+    height: 8px;
+    margin: auto 0;
+    border-radius: 4px;
+    background-color: #1bb934;
+}
+
+.chat_tool, .page_indicator {
+    display: flex;
+    float: right;
+    margin-top: 16px;
+}
+
+.chat_tool {
+    padding-right: 24px;
+    border-right: 1px solid #f0f1f4;
+}
+
+.page_indicator {
+    margin-right: 20px;
+}
+
+.chat_tool button, .page_indicator button {
+    box-sizing: content-box;
+    width: 35px;
+    height: 30px;
+    background: linear-gradient(to bottom, #ffffff, #f4f4f4);
+    border-top: 1px solid #ced0da;
+    border-bottom: 1px solid #ced0da;
+    border-right: 1px solid #ced0da;
+}
+
+.chat_tool button:first-of-type, .page_indicator button:first-of-type {
+    border-left: 1px solid #ced0da;
+    border-radius: 3px 0 0 3px;
+}
+
+.chat_tool button:last-of-type, .page_indicator button:last-of-type {
+    border-radius: 0 3px 3px 0;
+}
+
+.current_page {
+    padding: 0 15px 0 20px;
+    line-height: 32px;
+    font-size: 14px;
+    font-weight: 700;
+    color: #56688a;
+}
+
+.chat_list {
+    overflow: scroll;
+    height: calc(100% - 165px); /* 165 = 70（标题） + 95（发送消息框） */
+    padding: 25px 0;
+}
+
+.group_daily_chat {
+    margin-bottom: -20px; /* 由设计稿可知，原网页没有对该 div 内最后一个元素的 margin-bottom 进行抵消。这样生成的页面不是很美观，因此消除 margin-bottom */
+    padding: 0 30px;
+}
+
+.group_daily_chat section {
+    overflow: hidden;
+    margin-bottom: 20px;
+}
+
+.group_daily_chat section img {
+    float: left;
+}
+
+.group_daily_chat section h2 {
+    margin: 5px 0 10px 67px;
+    font-size: 16px;
+    font-weight: 700;
+    color: #585d68;
+}
+
+.send_time {
+    margin-left: 10px;
+    font-size: 14px;
+    color: #7f8fa4;
+}
+
+.group_daily_chat section p {
+    margin: 0 0 0 67px;
+    font-size: 14px;
+    color: #585d68;
+}
+
+.chat_image {
+    display: flex;
+    margin: 15px -12px 0 67px;
+}
+
+.chat_image * {
+    margin-right: 12px;
+}
+
+.img_with_hover {
+    position: relative;
+}
+
+.hover_img {
+    position: absolute;
+    top:0;
+    left: 0;
+    visibility: hidden;
+}
+
+.img_with_hover:hover .hover_img {
+    visibility: visible;
+}
+
+.divide_line {
+    position: relative;
+    height: 50px;
+}
+
+.divide_line hr {
+    position: absolute;
+    width: 100%;
+    height: 0;
+    top: 0;
+    bottom: 0;
+    margin: auto 0;
+    border-bottom-color: #d9dde3;
+}
+
+.divide_line span {
+    color: #7f8fa4;
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    width: fit-content;
+    height: fit-content;
+    margin: auto;
+    padding: 0 20px;
+    background-color: #ffffff;
+}
+
+.new_message_line hr {
+    border-bottom-color: #a7d6f9;
+}
+
+.new_message_line span {
+    color: #2399f1;
+}
+
+.send_message {
+    height: 95px;
+    padding: 20px 30px;
+    background: linear-gradient(to bottom, rgba(255, 255, 255, 0), rgba(255, 255, 255, 1) 20%);
+}
+
+.send_message button {
+    float: left;
+    width: 54px;
+    height: 54px;
+    border: none;
+    outline: none;
+}
+
+.send_message input {
+    float: left;
+    height: 54px;
+    width: calc(100% - 54px);
+    padding: 0 18px;
+    font-size: 14px;
+    border: 1px solid #dfe3e9;
+    border-left: none;
+    border-radius: 0 3px 3px 0;
+    outline: none;
+    color: #585d68;
+}

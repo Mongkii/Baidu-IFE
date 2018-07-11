@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>复杂页面实现</title>
+    <link href="index.css" rel="stylesheet">
+</head>
+<body>
+<aside>
+    <ul class="apps">
+        <li class="active">
+            <img src="resources/sidebar_item1.png" alt="Item 1">
+        </li>
+        <li>
+            <img src="resources/sidebar_item2.png" alt="Item 2">
+        </li>
+        <li>
+            <img src="resources/sidebar_item3.png" alt="Item 3">
+        </li>
+        <li>
+            <img src="resources/sidebar_add.png" alt="Add">
+        </li>
+    </ul>
+    <div class="bottom_menu">
+        <button>
+            <img src="resources/sidebar_bottom_grid.png">
+        </button>
+        <button>
+            <img src="resources/sidebar_bottom_settings.png">
+        </button>
+    </div>
+</aside>
+<nav>
+    <div class="menu_group">
+        <section>
+            <button><img src="resources/menu_settings.png"></button>
+            <h5>MENU</h5>
+            <ul>
+                <li>Overview</li>
+                <li>Sales
+                    <div class="indicator i_unread">54</div>
+                </li>
+                <li>Your Staff</li>
+                <li>Analytics & Targeting</li>
+                <li>What’s New</li>
+            </ul>
+        </section>
+        <hr>
+        <section>
+            <button><img src="resources/menu_settings.png"></button>
+            <h5>YOUR PRODUCTS</h5>
+            <ul class="list_with_icon">
+                <li><img src="resources/menu_books.png">Books</li>
+                <li><img src="resources/menu_tutorials.png">Tutorials</li>
+                <li><img src="resources/menu_stocks.png">Stocks</li>
+                <li><img src="resources/menu_infographics.png">Infographics</li>
+            </ul>
+        </section>
+        <hr>
+        <section>
+            <button><img src="resources/menu_settings.png"></button>
+            <h5>DASHBOARD</h5>
+            <ul>
+                <li class="selected active">Messages
+                    <div class="indicator i_unread">21</div>
+                </li>
+                <li>Connections</li>
+                <li>Integrations<div class="indicator i_error">!</div></li>
+                <li>Account Settings</li>
+                <li>App Settings</li>
+            </ul>
+        </section>
+    </div>
+    <div class="server_capacity">
+        <h5 class="amount"><b>$580</b>/$3200</h5>
+        <h5>Monthly Goals</h5>
+        <div class="progress_bar">
+            <div class="now_progress"></div>
+        </div>
+    </div>
+</nav>
+<main>
+    <header>
+        <h1>Messages</h1>
+        <section class="profile">
+            <div class="person_info">
+                <img src="resources/profile_photo.jpg">
+                <div class="title">
+                    <h5>Jordan J.</h5>
+                    <h6>Administrator</h6>
+                </div>
+            </div>
+            <button class="dropdown"><img src="resources/profile_dropdown.png"></button>
+        </section>
+    </header>
+    <div class="main_contents">
+        <section class="contacts_window">
+            <div class="search_window">
+                <input type="search" placeholder="Search">
+                <button><img src="resources/tool_search.png"></button>
+            </div>
+            <ul class="contacts_list">
+                <li class="contact_active">
+                    <div class="person_info">
+                        <img src="resources/avatar_Bessie%20Berry.png">
+                        <div class="title">
+                            <h5 class="name_with_unread_msg">Bessie Berry</h5>
+                            <h6>Twitter</h6>
+                        </div>
+                    </div>
+                    <div class="message_date">3m</div>
+                    <p class="message_unread too_long">I pay for the 4Mb/sec down, 512 Kb/sec up service from O2. In
+                        fact, it's relatively quick, and
+                        stable...</p>
+                    <div class="indicator i_unread">4</div>
+                </li>
+                <li>
+                    <div class="person_info">
+                        <img src="resources/avatar_Victor%20Weber.jpg">
+                        <div class="title">
+                            <h5>Victor Weber</h5>
+                            <h6>Adobe</h6>
+                        </div>
+                    </div>
+                    <div class="message_date">8m</div>
+                    <p class="too_long">I shared this on my fb wall a few months back, and I thought I'd share it here
+                        again because it's such a great...</p>
+                </li>
+                <li>
+                    <div class="person_info">
+                        <img src="resources/avatar_Dustin%20Benson.jpg">
+                        <div class="title">
+                            <h5>Dustin Benson</h5>
+                            <h6>Facebook</h6>
+                        </div>
+                    </div>
+                    <div class="message_date">Yesterday</div>
+                    <p>If there is anyone who needs an invitation please add yourself in the comments of this post!</p>
+                </li>
+                <li>
+                    <div class="person_info">
+                        <img src="resources/avatar_Jack%20Mason.jpg">
+                        <div class="title">
+                            <h5>Jack Mason</h5>
+                            <h6>Yahoo</h6>
+                        </div>
+                    </div>
+                    <div class="message_date">Yesterday</div>
+                    <p class="too_long">BruteDC is a peer-to-peer movie+tv series sharing and downloading platform which
+                        works on intranet inside...</p>
+                </li>
+                <li>
+                    <div class="person_info">
+                        <img src="resources/avatar_Stephen%20Shelton.jpg">
+                        <div class="title">
+                            <h5>Stephen Shelton</h5>
+                            <h6>Snapchat</h6>
+                        </div>
+                    </div>
+                    <div class="message_date">13 Jun</div>
+                    <p class="too_long">Yes, p2p traffic is often filtered (QoSed). Although i do use BT on O2 wires,
+                        and in good days dl speed...</p>
+                </li>
+                <li>
+                    <div class="person_info">
+                        <img src="resources/avatar_Sally%20Willis.jpg">
+                        <div class="title">
+                            <h5>Sally Willis</h5>
+                            <h6>Twitter</h6>
+                        </div>
+                    </div>
+                    <div class="message_date">12 Jun</div>
+                    <p>Yes, it's O2: 'internet extreme', which is no longer offered.</p>
+                </li>
+                <li>
+                    <div class="person_info">
+                        <img src="resources/avatar_Robert%20Patton.jpg">
+                        <div class="title">
+                            <h5>Robert Patton</h5>
+                            <h6>A Team</h6>
+                        </div>
+                    </div>
+                    <div class="message_date">9 Jun</div>
+                    <p class="too_long">I change my service from this 4Mb plan to their much cheaper 8Mb plan, my speed
+                        will dramatically decrease.</p>
+                </li>
+            </ul>
+        </section>
+        <section class="chat_window">
+            <header>
+                <div class="page_indicator">
+                    <span class="current_page">1 of 28</span>
+                    <button><img src="resources/tools_arrow_left.png"></button>
+                    <button><img src="resources/tools_arrow_right.png"></button>
+                </div>
+                <div class="chat_tool">
+                    <button><img src="resources/tool_user.png"></button>
+                    <button><img src="resources/tool_upload.png"></button>
+                    <button><img src="resources/tool_trash.png"></button>
+                </div>
+                <h2 class="status_online">Bessie Berry</h2>
+            </header>
+            <div class="chat_list">
+                <div class="group_daily_chat">
+                    <section>
+                        <img src="resources/avatar_Bessie%20Berry.png">
+                        <h2>Bessie Berry<span class="send_time">8:31 AM</span></h2>
+                        <p>Hi guys Ive got the O2 package and have really slow internet. A speed check online said i can
+                            get 3mbps but it seems more like 0.5 these days, just freezing and taking ages to open pages
+                            and open audio files for example. I have decided to switch to the UPC package which offers
+                            10mbps but do you think i will get it?</p>
+                    </section>
+                    <section>
+                        <img src="resources/avatar_Jordan%20Jackson.jpg">
+                        <h2>Jordan Jackson<span class="send_time">8:31 AM</span></h2>
+                        <p>I have internet for 9 month and nevere could benefit from the full capacity of 5Mbit/s as it
+                            is filtered by O2 when it detect traffic on public p2p sharing in my situation all my
+                            internet speed slows to 512Kbit/s. I never had 400KB/s on when downloading from p2p public
+                            servers like torrent emule etc. I downoad with 500KB/s from private trakers instead. So
+                            conlcusion O2 block trafic on p2p connections. I have made hundreds of test in Italy and
+                            Sweden and Romania with the same file to doanload with the same setting and same antivirus
+                            and just needed to open ports in firewall and forward same ports and the speed was at full
+                            capacity in 1 minute. here in 9 month never had this luck.</p>
+                    </section>
+                </div>
+                <div class="divide_line">
+                    <hr>
+                    <span>Tuesday</span>
+                </div>
+                <div class="group_daily_chat">
+                    <section>
+                        <img src="resources/avatar_Bessie%20Berry.png">
+                        <h2>Bessie Berry<span class="send_time">8:31 AM</span></h2>
+                        <p>Funny comparison. so would the proper antivirus not slow down the internet as much or do you
+                            mean a freebie doenst protect the computer from viruses?</p>
+                    </section>
+                    <section>
+                        <img src="resources/avatar_Jordan%20Jackson.jpg">
+                        <h2>Jordan Jackson<span class="send_time">8:31 AM</span></h2>
+                        <p>I pay for the 4Mb/sec down, 512 Kb/sec up service from O2, and haven't had any problems. In
+                            fact, it's relatively quick, and stable. It's not perfect, but I really don't have issues,
+                            as long as I keep track of what I'm doing on it. I max out at about 3 Mb/sec down, and 350
+                            Kb/sec up. Probably because of a noisy telephone line, not because I'm being throttled. When
+                            my uploads go over 25 KB/sec (note, bytes, not bits), my download speed suffers. This is
+                            expected, as downloads require upload bandwidth as well.</p>
+                        <div class="chat_image">
+                            <img src="resources/chat_Photo%201.jpg" alt="Image">
+                            <div class="img_with_hover">
+                                <img src="resources/chat_Photo%202.jpg" alt="Image">
+                                <img src="resources/chat_Photo%202_hover.jpg" alt="Image: hover" class="hover_img">
+                            </div>
+                        </div>
+                    </section>
+                </div>
+                <div class="divide_line new_message_line">
+                    <hr>
+                    <span>New Messages</span>
+                </div>
+                <div class="group_daily_chat">
+                    <section>
+                        <img src="resources/avatar_Bessie%20Berry.png">
+                        <h2>Bessie Berry<span class="send_time">8:31 AM</span></h2>
+                        <p>I pay for the 4Mb/sec down, 512 Kb/sec up service from O2. In fact, it's relatively quick,
+                            and stable. It's not perfect, but I really don't have issues, as long as I keep track of
+                            what I'm doing on it. </p>
+                    </section>
+                </div>
+            </div>
+            <div class="send_message">
+                <button type="submit" value="send_msg"><img src="resources/message_add.png"></button>
+                <input type="text"
+                       value="Well, kinda both :) but more of that second option, i`ve seen many systems infected and crawling with   "
+                       autofocus> <!--不用 JS 暂时无法实现光标在文字末尾 -->
+            </div>
+        </section>
+    </div>
+</main>
+</body>
+</html>
