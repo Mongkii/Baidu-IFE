@@ -1,0 +1,437 @@
+/* 设计稿使用字体非常用字体，不内嵌字体的话大部分电脑无法还原。因此本网页中未对字体进行完整还原，因为意义不大 */
+
+/* 全局格式化 */
+body {
+    width: 1600px;
+    margin: 0 auto;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+ul {
+    padding-left: 0;
+    list-style-type: none;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+p {
+    margin: 0; /* 方便布局 */
+}
+
+h1 { font-size: 62px; }
+h2 { font-size: 42px; }
+h3 { font-size: 20px; }
+h4 { font-size: 16px; }
+h5 { font-size: 14px; }
+
+/* 欢迎 */
+.hello {
+    padding: 210px 315px;
+    height: 990px;
+    background-image: url("resources/Background.jpg");
+    background-size: cover;
+}
+
+.hello header {
+    width: 770px;
+    margin: 0 auto;
+    text-align: center;
+    color: #ffffff;
+}
+
+.hello header h1 {
+    margin-bottom: 80px;
+    line-height: 1em; /* 因字体太大，默认行高会占用较多像素，不利于按设计图上量出的数值排版 */
+}
+
+.hello header p {
+    margin-bottom: 100px;
+    font-size: 20px;
+}
+
+.login {
+    height: 250px;
+    margin: 100px auto 0;
+    padding: 60px 100px 50px;
+    border: 1px solid #ffffff;
+    border-radius: 5px;
+    color: #ffffff;
+}
+
+.login {
+    text-align: center;
+}
+
+.login h4 {
+    margin-bottom: 15px;
+}
+
+.login p {
+    margin-bottom: 40px;
+    font-size: 12px;
+}
+
+.create_account {
+    display: flex;
+    justify-content: space-between;
+}
+
+.create_account input {
+    flex: none;
+    width: 290px;
+    height: 50px;
+    padding-left: 20px;
+    font-size: 14px;
+    color: #ffffff;
+    border-radius: 5px;
+    background-color: transparent;
+}
+
+.create_account input[type="submit"] {
+    width: 125px;
+    padding: 0;
+    font-size: 12px;
+    color: #000000;
+    background-color: #ffffff;
+}
+
+.create_account button {
+    width: 125px;
+    height: 50px;
+    font-size: 12px;
+    border: none;
+    border-radius: 5px;
+    outline: none;
+    background-color: #ffffff;
+}
+
+/* 特性 */
+.awesome {
+    height: 710px;
+    padding: 90px 275px 110px;
+}
+
+.awesome header {
+    width: 660px;
+    margin: 0 auto 80px;
+    text-align: center;
+}
+
+.awesome header p {
+    margin-bottom: 35px;
+    font-size: 14px;
+}
+
+.awesome main {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    margin-bottom: -75px;
+}
+
+.awesome_list section {
+    overflow: auto;
+    flex: none;
+    width: 440px;
+    margin-bottom: 75px;
+}
+
+.awesome_list section img {
+    float: left;
+}
+
+.awesome_list section h3 {
+    margin: 0 0 20px 75px;
+}
+
+.awesome_list section p {
+    margin-left: 75px;
+    font-size: 16px;
+}
+
+/* 推销 */
+.sale {
+    position: relative;
+    height: 800px;
+    padding: 180px 315px;
+    background-image: url("resources/Background 2.jpg");
+    background-size: cover;
+}
+
+.sale header {
+    width: 370px;
+    margin-bottom: 50px;
+    color: #ffffff;
+}
+
+.sale header h2 {
+    margin-bottom: 35px;
+}
+
+.sale header p {
+    font-size: 18px;
+}
+
+.sale_button button {
+    width: 240px;
+    height: 60px;
+    font-size: 12px;
+    outline: none;
+    border-radius: 5px;
+}
+
+.btn_checkout {
+    margin-right: 30px;
+    border: none;
+    background-color: #ffffff;
+    color: #000000;
+}
+
+.btn_try {
+    background-color: transparent;
+    color: #ffffff;
+}
+
+.sale aside {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    margin: auto 0;
+    height: fit-content;
+}
+
+/* 产品介绍 */
+.product {
+    height: 580px;
+    padding: 100px 315px;
+    border-bottom: 1px solid lightgrey;
+}
+
+.product header {
+    margin-bottom: 75px;
+    text-align: center;
+}
+
+.product main {
+    display: flex;
+    justify-content: space-between;
+}
+
+.product main section {
+    flex: none;
+    width: 270px;
+    text-align: center;
+    font-size: 16px;
+}
+
+.product main section img {
+    margin-bottom: 35px;
+}
+
+/* 优势展示 */
+.advantage {
+    height: 1000px;
+    padding: 115px 315px;
+    border-bottom: 1px solid lightgrey;
+}
+
+.advantage section {
+    overflow: hidden; /* 实践发现，属性值为 auto 时，缩放会出现溢出的情况。为确保页面不变形，之后属性值都采用 hidden */
+    margin-bottom: 80px;
+}
+
+.advantage section h3 {
+    margin: 70px 0 25px;
+    font-size: 20px;
+}
+
+.advantage section p {
+    font-size: 16px;
+}
+
+.advantage_business img {
+    float: left;
+    margin-right: 100px;
+}
+
+.advantage_color img {
+    float: right;
+    margin-left: 100px;
+}
+
+/* 团队介绍 */
+.crew {
+    height: 1085px;
+    padding: 100px 315px;
+    border-bottom: 1px solid lightgrey;
+}
+
+.crew header {
+    width: 700px;
+    margin: 0 auto 60px;
+    text-align: center;
+}
+
+.crew header h2 {
+    margin-bottom: 20px;
+}
+
+.crew header p {
+    font-size: 18px;
+}
+
+.crew main {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    margin-bottom: -30px;
+}
+
+.crew main div {
+    flex: none;
+    width: 470px;
+    margin-bottom: 30px;
+}
+
+.hover_member {
+    position: relative;
+}
+
+.hover_member .hover_image {
+    display: none;
+}
+
+.hover_member:hover .hover_image {
+    display: block;
+    position: absolute;
+}
+
+/* 联系方式 */
+.contact {
+    position: relative;
+    height: 700px;
+    padding: 155px 315px 155px 915px;
+}
+
+.contact header {
+    margin-bottom: 60px;
+}
+
+.contact header h2 {
+    margin-bottom: 25px;
+}
+
+.contact header p {
+    font-size: 16px;
+}
+
+.contact_method li {
+    overflow: hidden;
+    margin-bottom: 30px;
+}
+
+.contact_method li p {
+    margin-left: 35px;
+    font-size: 16px;
+    font-weight: 700;
+}
+
+.contact_method li img {
+    float: left;
+    margin-top: 3px; /* 文字的默认行高使图片位置显得偏上，利用 margin 做修正 */
+}
+
+.send_email {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 315px;
+    margin: auto;
+    width: 470px;
+    height: 560px;
+    padding: 45px 50px 65px;
+    border: 1px solid lightgrey;
+    border-radius: 5px;
+}
+
+.send_email h4 {
+    margin-bottom: 40px;
+    text-align: center;
+}
+
+.send_email input {
+    display: block;
+    width: 100%;
+    height: 50px;
+    margin-bottom: 30px;
+    padding-left: 20px;
+}
+
+.send_email textarea {
+    display: block;
+    width: 100%;
+    height: 145px;
+    padding: 10px 20px;
+    margin-bottom: 30px;
+    resize: none;
+    border: 1px solid lightgrey;
+}
+
+.send_email button {
+    display: block;
+    width: 100%;
+    height: 50px;
+    border: none;
+    outline: none;
+    background-color: #000000;
+    color: #ffffff;
+}
+
+/* 底部 */
+footer { /* 此处排版更好的实现方法是用 flex，但为了实践其他排版，使用了 margin + padding 的传统方法 */
+    overflow: hidden;
+    height: 410px;
+    padding: 80px 215px;
+    margin-right: -30px;
+    font-size: 0;
+    background-color: #000000;
+}
+
+footer section{
+    display: inline-block;
+    vertical-align: top; /* display: inline-block; 后，不同高度的元素默认按其 baseline 排列，需调整 */
+    width: 270px;
+    margin-right: 30px;
+    color: #ffffff;
+}
+
+footer section h5 {
+    margin-bottom: 30px;
+}
+
+footer ul li, footer p {
+    margin-bottom: 25px;
+    font-size: 16px;
+    color: dimgrey;
+}
+
+.contact_details h5{
+    margin-bottom: 15px;
+}
+
+.contact_details p {
+    margin-bottom: 30px;
+}
+
+.icon_group img {
+    display: inline-block;
+    margin-right: 20px;
+}
+
