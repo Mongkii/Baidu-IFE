@@ -4,7 +4,8 @@ var fieldset_region = document.querySelector("#select_region"),
     div_bar = document.querySelector("#bar_graph"),
     div_line = document.querySelector("#line_graph");
 
-var default_line_graph_color = ""; // 储存初始值
+var default_line_graph_color = "", // 储存初始值
+    default_bar_graph_color = "";
 
 function getFilteredData() {
     var product_filter = getFilterFromCheckbox(fieldset_product);
@@ -25,7 +26,8 @@ function refreshGraph() {
     }
 }
 
-function showOutput() { // 筛选并显示结果
+function refreshOutput() { // 筛选并显示结果
+    multiple_items = []; // 因筛选结果可能有变动，重置了多选 data 数组
     var data = getFilteredData();
 
     generateTable(table, data);
@@ -35,12 +37,12 @@ function showOutput() { // 筛选并显示结果
 
 fieldset_region.onclick = function (e) {
     checkNumOfSelected(e, fieldset_region);
-    showOutput();
+    refreshOutput();
 }
 
 fieldset_product.onclick = function (e) {
     checkNumOfSelected(e, fieldset_product);
-    showOutput();
+    refreshOutput();
 }
 
 
@@ -63,12 +65,14 @@ window.onload = function () {
     fieldset_product.children[1].children[0].checked = true;
 
     default_line_graph_color = line_setting.graph_color; // 从其他 js 中读取初始值
+    default_bar_graph_color = bar_setting.graph_color;
 
-    showOutput(); // 初始显示一次数据
+    refreshOutput(); // 初始显示一次数据
 }
 
 table.onmouseover = function (e) {
     line_setting.graph_color = default_line_graph_color; // 确保每次显示时都使用初始值
+    bar_setting.graph_color = default_bar_graph_color;
 
     if (e.target && e.target.nodeName.toUpperCase() == "TD") {
         var data = retrieveDataFromTD(e.target);
