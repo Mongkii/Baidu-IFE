@@ -4,6 +4,8 @@ var line_setting = { // 原生 JS 不支持模块，为避免相同变量名冲�
     height: 450, // 图表高
     axis_color: "#000000", // 轴的颜色
     axis_width: 2, // 轴的宽度
+    divide_color: "#aaaaaa", // 分隔线颜色
+    divide_number: 6, // 分隔线数量
 
     // ----生成数据设置----
     line_width: 2, // 线的宽度
@@ -28,7 +30,22 @@ function lineDrawAxis(ctx, o_x, o_y, x_length, y_length) {
     ctx.stroke();
 }
 
-function lineDrawLine(ctx, x_1, y_1, x_2, y_2) {
+function lineDrawDivide(ctx, o_x, o_y, x_length, y_length, max) {
+    var gap = 1 / line_setting.divide_number * y_length / (line_setting.y_axis_ratio * 0.9); // 计算分隔线间隔。除以 (line_setting.y_axis_ratio * 0.9) 是为了使顶端有一定留白，更好看
+    for (let i = 1; i < line_setting.divide_number + 1; i++) {
+        var text = Math.round(gap * i / y_length * max);
+        var y = o_y - gap * i;
+        ctx.beginPath();
+        ctx.moveTo(o_x, y);
+        ctx.lineTo(o_x + x_length, y);
+        ctx.lineWidth = line_setting.axis_width / 2;
+        ctx.strokeStyle = line_setting.divide_color;
+        ctx.stroke();
+        lineDrawText(ctx, o_x - 30, y + 5, text, line_setting.divide_color);
+    }
+}
+
+function lineDrawConnect(ctx, x_1, y_1, x_2, y_2) {
     ctx.beginPath();
     ctx.moveTo(x_1, y_1);
     ctx.lineTo(x_2, y_2);
@@ -82,24 +99,26 @@ function lineDrawGraph(input, multiple) { // multiple 标识"是否有多个 dat
     }
 
     if (multiple != true) {
-        var maxinum = Math.max.apply(null, input) * line_setting.y_axis_ratio; // Y 轴最大值
+        var max = Math.max.apply(null, input) * line_setting.y_axis_ratio; // Y 轴最大值
+
         for (let i = 0; i < input.length; i++) {
             var dot_x = first_dot_x + space * i; // 当前点在 X 轴的位置
-            var dot_y = o_y - input[i] / maxinum * y_length; // 当前点在 Y 轴的位置
+            var dot_y = o_y - input[i] / max * y_length; // 当前点在 Y 轴的位置
             if (i < input.length - 1) {
-                lineDrawLine(ctx, dot_x, dot_y, dot_x + space, o_y - input[i + 1] / maxinum * y_length);
+                lineDrawConnect(ctx, dot_x, dot_y, dot_x + space, o_y - input[i + 1] / max * y_length);
                 // dot_x + space = 下一个点在 X 轴上的位置
-                // o_y - input[i + 1] / maxinum * y_length = 下一个点在 Y 轴上的位置
+                // o_y - input[i + 1] / max * y_length = 下一个点在 Y 轴上的位置
             }
             lineDrawDot(ctx, dot_x, dot_y);
-            lineDrawText(ctx, dot_x - 15, dot_y - 15, input[i], line_setting.number_color);
+            lineDrawText(ctx, dot_x - 15, dot_y - 15, input[i], line_setting.number_color); // 在图上显示具体数值
         }
     } else {
         var all_max = [];
         for (let i = 0; i < input.length; i++) {
             all_max.push(input[i]["max"]);
         }
-        var maxinum = Math.max.apply(null, all_max) * line_setting.y_axis_ratio;
+        var max = Math.max.apply(null, all_max) * line_setting.y_axis_ratio;
+        lineDrawDivide(ctx, o_x, o_y, x_length, y_length, max); // 绘制分隔线
 
         for (let i = 0; i < input.length; i++) {
             let data = input[i]["data"];
@@ -107,12 +126,13 @@ function lineDrawGraph(input, multiple) { // multiple 标识"是否有多个 dat
 
             for (let j = 0; j < data.length; j++) {
                 var dot_x = first_dot_x + space * j;
-                var dot_y = o_y - data[j] / maxinum * y_length;
+                var dot_y = o_y - data[j] / max * y_length;
                 if (j < data.length - 1) {
-                    lineDrawLine(ctx, dot_x, dot_y, dot_x + space, o_y - data[j + 1] / maxinum * y_length);
+                    lineDrawConnect(ctx, dot_x, dot_y, dot_x + space, o_y - data[j + 1] / max * y_length);
                 }
                 lineDrawDot(ctx, dot_x, dot_y);
-                lineDrawText(ctx, dot_x - 15, dot_y - 15, data[j], line_setting.number_color); // 当 data 过多时，数据会叠在一起看不清。考虑移除或更换显示形式
+                // 为避免数据太多时看不清数值，有多个 data 时采用分隔线，而不显示具体数值
+                // lineDrawText(ctx, dot_x - 15, dot_y - 15, data[j], line_setting.number_color);
             }
         }
     }

@@ -4,6 +4,8 @@ var bar_setting = { // 原生 JS 不支持模块，为避免相同变量名冲�
     height: 450, // 图表高
     axis_color: "#000000", // 轴的颜色
     axis_width: 2, // 轴的宽度
+    divide_color: "#aaaaaa", // 分隔线颜色
+    divide_number: 6, // 分隔线数量
 
     // ----生成数据设置----
     graph_color: "#5ec0ed", // 柱的颜色
@@ -33,6 +35,23 @@ function barDrawAxis(svg, o_x, o_y, x_length, y_length) {
 
     svg.appendChild(x_axis);
     svg.appendChild(y_axis);
+}
+
+function barDrawDivide(svg, o_x, o_y, x_length, y_length, max) {
+    var gap = 1 / bar_setting.divide_number * y_length / (bar_setting.y_axis_ratio * 0.9); // 计算分隔线间隔。除以 (bar_setting.y_axis_ratio * 0.9) 是为了使顶端有一定留白，更好看
+    for (let i = 1; i < bar_setting.divide_number + 1; i++) {
+        var text = Math.round(gap * i / y_length * max);
+        var y = o_y - gap * i;
+        var line = document.createElementNS("http://www.w3.org/2000/svg", "line");
+        line.setAttribute("x1", o_x);
+        line.setAttribute("y1", y);
+        line.setAttribute("x2", o_x + x_length);
+        line.setAttribute("y2", y);
+        line.setAttribute("stroke-width", bar_setting.axis_width / 2);
+        line.setAttribute("stroke", bar_setting.divide_color);
+        svg.appendChild(line);
+        barDrawText(svg, o_x - 30, y + 5, text, bar_setting.divide_color);
+    }
 }
 
 function barDrawBar(svg, x, y, width, height) { // 为了便于调用数据，此处 x, y 指柱左下角位置
@@ -76,20 +95,21 @@ function barDrawGraph(input, multiple) {
     }
 
     if (multiple != true) {
-        var maxinum = Math.max.apply(null, input) * bar_setting.y_axis_ratio; // Y 轴最大值
+        var max = Math.max.apply(null, input) * bar_setting.y_axis_ratio; // Y 轴最大值
         for (let i = 0; i < input.length; i++) {
             var bar_start_x = first_bar_x + bar_space_width * i; // 当前柱的起始绘制点
             var text_start_x = bar_start_x + bar_width / 2 - 15; // 文字的起始绘制点。该计算值能使文字横坐标尽量处于靠柱中间的地方
-            var data_height = input[i] / maxinum * y_length;
+            var data_height = input[i] / max * y_length;
             barDrawBar(svg, bar_start_x, o_y, bar_width, data_height);
-            barDrawText(svg, text_start_x, o_y - data_height - bar_setting.axis_width / 2 - 10, input[i], bar_setting.number_color); // o_y - data_height - axis_width / 2 = 柱顶实际 Y 坐标
+            barDrawText(svg, text_start_x, o_y - data_height - bar_setting.axis_width / 2 - 10, input[i], bar_setting.number_color); // 在图上显示具体数值。o_y - data_height - axis_width / 2 = 柱顶实际 Y 坐标
         }
     } else {
         var all_max = [];
         for (let i = 0; i < input.length; i++) {
             all_max.push(input[i]["max"]);
         }
-        var maxinum = Math.max.apply(null, all_max) * line_setting.y_axis_ratio;
+        var max = Math.max.apply(null, all_max) * line_setting.y_axis_ratio;
+        barDrawDivide(svg, o_x, o_y, x_length, y_length, max); // 绘制分隔线
 
         bar_width = bar_width / input.length; // 根据 data 数量平分每个 data 的宽度
 
@@ -100,9 +120,10 @@ function barDrawGraph(input, multiple) {
             for (let j = 0; j < data.length; j++) {
                 var bar_start_x = first_bar_x + bar_width * i + bar_space_width * j; // bar_width * i = 当前 data 相对第一个 data 的横坐标偏移量。下同
                 var text_start_x = bar_start_x + bar_width / 2 - 15;
-                var data_height = data[j] / maxinum * y_length;
+                var data_height = data[j] / max * y_length;
                 barDrawBar(svg, bar_start_x, o_y, bar_width, data_height);
-                barDrawText(svg, text_start_x, o_y - data_height - bar_setting.axis_width / 2 - 10, data[j], bar_setting.number_color);
+                // 为避免数据太多时看不清数值，有多个 data 时采用分隔线，而不显示具体数值
+                // barDrawText(svg, text_start_x, o_y - data_height - bar_setting.axis_width / 2 - 10, data[j], bar_setting.number_color);
             }
         }
     }
