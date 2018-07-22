@@ -47,7 +47,7 @@ function retrieveDataFromTD(td) {
 }
 
 function drawGraph(data, multiple) {
-    var body_width = getComputedStyle(document.querySelector("body"), null).width;
+    var body_width = window.getComputedStyle(document.querySelector("body"), null).width;
     var graph_width = parseInt(body_width) / 2 - 50; // 获取网页宽度，经适当计算后作为图表宽度
 
     line_setting.width = graph_width;
