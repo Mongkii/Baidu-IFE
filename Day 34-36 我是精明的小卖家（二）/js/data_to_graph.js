@@ -32,11 +32,11 @@ function retrieveDataFromTD(td) {
      * 优点：之后可以方便的调取商品、地区名这些数据；数据直接从服务器取得，避开了本地修改
      * 缺点：为了在 rowspan 情况下能顺利读取被合并的数据，要在 table.js 的 generateTable() 函数中做特殊处理，详见其注释。如果不这么处理，读取 rowspan 会极其麻烦。
      * --------
-    if (document.querySelector("#show_output thead tr").children[0].innerHTML == "商品") {
+    if (document.querySelector("#output_table thead tr").children[0].innerHTML == "商品") {
         var product = td.parentNode.children[0].innerHTML,
             region = td.parentNode.children[1].innerHTML;
         data = retrieveGraphData(product, region);
-    } else if (document.querySelector("#show_output thead tr").children[0].innerHTML == "地区") {
+    } else if (document.querySelector("#output_table thead tr").children[0].innerHTML == "地区") {
         var product = td.parentNode.children[1].innerHTML,
             region = td.parentNode.children[0].innerHTML;
         data = retrieveGraphData(product, region);
