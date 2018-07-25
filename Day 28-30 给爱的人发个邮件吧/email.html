@@ -200,7 +200,8 @@
                 case "Enter":
                     putItemInInput(email_sug.children[select_index]);
                     break;
-                case ("Escape" || "Esc"):
+                case "Escape": // 这两种情况运行内容相同，因此不加 break 分隔
+                case "Esc":
                     email_input.select();
                     hideSuggestion();
                     break;
