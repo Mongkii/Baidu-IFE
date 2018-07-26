@@ -78,10 +78,6 @@ window.onload = function () {
     default_bar_graph_color = bar_setting.graph_color;
 
     refreshOutput(); // 初始显示一次数据
-
-    if (localStorage.length == 0) {
-        createLocalStorage(sourceData);
-    }
 }
 
 table.onmouseover = function (e) {
@@ -91,7 +87,7 @@ table.onmouseover = function (e) {
     if (e.target && td_on_edit.status == false) { // 当 td 处于非编辑状态时
         switch (e.target.nodeName.toUpperCase()) {
             case "TD":
-                deleteEditSign(last_mouseover_td);
+                deleteEditSign(last_mouseover_td); // 移入这个 td 时才清除上一个 td 的编辑符号，而非“当移出此 td 时，清除此 td 的符号”，从而避免当鼠标在编辑符号上时，符号循环创建删除
                 var data = getDataFromTD(e.target);
                 drawGraph(data);
                 if (!isNaN(e.target.innerText)) { // 当 td 内容为数字才创建编辑符号
