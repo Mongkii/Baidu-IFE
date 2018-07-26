@@ -1,0 +1,29 @@
+.filters {
+    display: flex;
+    margin-bottom: 20px;
+}
+
+.filters fieldset {
+    flex: none;
+    width: fit-content;
+    padding-right: 20px;
+    margin-right: 20px;
+}
+
+.filters fieldset label {
+    display: block;
+}
+
+.filters fieldset hr {
+    margin: 2px 0;
+}
+
+#show_output {
+    border-collapse: collapse;
+}
+
+#show_output td, #show_output th {
+    padding: 4px 8px;
+    text-align: center;
+    border: 1px solid #cccccc;
+}

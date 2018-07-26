@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Advanced Practice</title>
+</head>
+<body>
+<button id="a">A</button>
+<button id="b">B</button>
+<button id="c">C</button>
+
+<button id="d">D</button>
+<button id="e">E</button>
+<button id="f">F</button>
+
+
+<div id="contABC"></div>
+<div id="contDEF"></div>
+<script>
+    var buttons = document.querySelectorAll("button"),
+        cont_abc = document.querySelector("#contABC"),
+        cont_def = document.querySelector("#contDEF");
+
+    for (let i = 0; i < buttons.length; i++) {
+        buttons[i].onclick = function () {
+            setHashFromButton(buttons[i]);
+        }
+    }
+
+    function setHashFromButton(btn) {
+        if (btn.id.match(/[abc]/) != null) {
+            changeHashURL("abc", btn.id);
+        }
+        if (btn.id.match(/[def]/) != null) {
+            changeHashURL("def", btn.id);
+        }
+        window.location.reload(); // 为了每次更改 hash 时能即时显示更改，需刷新页面
+    }
+
+    function changeHashURL(range_str, value) {
+        var hash_reg = new RegExp("_[" + range_str + "]"); // 例：_[abc]
+        var hash = window.location.hash;
+        if (hash_reg.test(hash)) {
+            history.pushState(null, null, hash.replace(hash_reg, "_" + value));
+        } else {
+            hash += ("_" + value);
+            hash = (hash.indexOf("#") == 0) ? hash : ("#" + hash); // 检查是否有 hash 标识
+            history.pushState(null, null, hash);
+        }
+    }
+
+    function getIDFromHash() {
+        var id_group = [];
+        var hash = window.location.hash;
+        var abc_match = hash.match(/_([abc])/),
+            def_match = hash.match(/_([def])/);
+        if (abc_match) {
+            id_group["abc"] = abc_match[1];
+        }
+        if (def_match) {
+            id_group["def"] = def_match[1];
+        }
+        return id_group;
+    }
+
+    function renderDivs() {
+        var id_refer = getIDFromHash();
+
+        renderDivByButtonID(cont_abc, id_refer["abc"]);
+        renderDivByButtonID(cont_def, id_refer["def"]);
+    }
+
+    function renderDivByButtonID(div, btn_id) {
+        if (btn_id) {
+            var btn = document.querySelector("#" + btn_id);
+            div.innerHTML = btn.innerHTML;
+        } else {
+            div.innerHTML = "";
+        }
+
+    }
+
+    window.onpopstate = renderDivs;
+    window.onload = renderDivs;
+
+</script>
+</body>
+</html>

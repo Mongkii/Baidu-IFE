@@ -1,0 +1,86 @@
+.filters {
+    display: flex;
+    margin-bottom: 20px;
+}
+
+.filters fieldset {
+    flex: none;
+    width: fit-content;
+    padding-right: 20px;
+    margin-right: 20px;
+}
+
+.filters fieldset label {
+    display: block;
+}
+
+.filters fieldset hr {
+    margin: 2px 0;
+}
+
+#output_table {
+    border-collapse: collapse;
+}
+
+#output_table td, #output_table th {
+    padding: 4px 8px;
+    text-align: center;
+    border: 1px solid #cccccc;
+    position: relative; /* 便于之后在 td 里面添加绝对定位元素 */
+}
+
+#output_table tr:hover {
+    background-color: #eeeeee;
+}
+
+.graph {
+    display: flex;
+    margin-bottom: 20px;
+}
+
+.tr_selected {
+    background-color: #fffddd;
+}
+
+#edit_sign {
+    position: absolute;
+    top: 0;
+    right: 0;
+    background-image: url("resource/edit_icon.png");
+    background-size: cover;
+}
+
+#editor_div {
+    position: absolute;
+    top:0;
+    left: 0;
+    display: flex;
+    background-color: red;
+    z-index: 999;
+}
+
+#td_input {
+    box-sizing: border-box;
+    font-size: 16px;
+    padding-left: 0.5em;
+    border: none;
+    outline: none;
+}
+
+.btn_div {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.btn_div button {
+    border: none;
+    outline: none;
+}
+
+#edit_submit {
+    background: center / contain no-repeat #ff7b6a url("resource/btn_submit.png");
+}
+
+#edit_cancel {
+    background: center / contain no-repeat #89d685 url("resource/btn_cancel.png");
+}

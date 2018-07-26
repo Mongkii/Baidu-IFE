@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Canvas</title>
+</head>
+<body>
+<h3>直线</h3>
+<canvas id="line"></canvas>
+<h3>矩形</h3>
+<canvas id="rect"></canvas>
+<h3>圆</h3>
+<canvas id="circle"></canvas>
+<h3>文字</h3>
+<canvas id="text"></canvas>
+<h3>时钟</h3>
+<canvas id="clock"></canvas>
+<h3>云</h3>
+<canvas id="cloud"></canvas>
+<hr>
+<h2>折线图</h2>
+<div id="line_graph"></div>
+</body>
+<script>
+    var canvas = document.querySelectorAll("canvas"); // 统一画布大小
+    for (let i = 0; i < canvas.length; i++) {
+        canvas[i].width = 200;
+        canvas[i].height = 100;
+    }
+
+    var line_ctx = document.querySelector("#line").getContext("2d");
+    line_ctx.beginPath();
+    line_ctx.moveTo(0, 100);
+    line_ctx.lineTo(200, 0);
+    line_ctx.lineWidth = 2;
+    line_ctx.stroke();
+
+    var rect_ctx = document.querySelector("#rect").getContext("2d");
+    rect_ctx.fillRect(25, 25, 150, 50);
+
+    var circle_ctx = document.querySelector("#circle").getContext("2d");
+    circle_ctx.beginPath();
+    circle_ctx.arc(100, 50, 45, 0, 2 * Math.PI);
+    circle_ctx.stroke();
+
+    var text_ctx = document.querySelector("#text").getContext("2d");
+    text_ctx.font = "40px sans-serif";
+    text_ctx.textBaseline = "middle";
+    text_ctx.fillText("文字填充", 10, 50);
+
+    var clock_ctx = document.querySelector("#clock").getContext("2d");
+    {
+        function angleToXY(o_x, o_y, radius, angle) { // 角度转坐标
+            var new_xy = {};
+            new_xy.x = o_x + Math.cos(angle) * radius;
+            new_xy.y = o_y + Math.sin(angle) * radius;
+            return new_xy;
+        }
+
+        clock_ctx.beginPath();
+        clock_ctx.arc(100, 50, 45, 0, 2 * Math.PI);
+        clock_ctx.lineWidth = 2;
+        clock_ctx.stroke();
+
+        for (let angle = 0; angle < 2 * Math.PI; angle += Math.PI / 6) { // 绘制刻度
+            var start = angleToXY(100, 50, 38, angle);
+            var end = angleToXY(100, 50, 45, angle);
+            clock_ctx.beginPath();
+            clock_ctx.moveTo(start["x"], start["y"]);
+            clock_ctx.lineTo(end["x"], end["y"]);
+            clock_ctx.lineWidth = 4;
+            clock_ctx.stroke();
+        }
+
+        clock_ctx.beginPath(); //表心
+        clock_ctx.arc(100, 50, 3, 0, 2 * Math.PI);
+        clock_ctx.fill();
+
+        clock_ctx.beginPath(); // 分针
+        clock_ctx.moveTo(100, 50);
+        clock_ctx.lineTo(100, 15);
+        clock_ctx.lineWidth = 3;
+        clock_ctx.stroke();
+
+        clock_ctx.beginPath(); // 时针
+        clock_ctx.moveTo(100, 50);
+        clock_ctx.lineTo(120, 50);
+        clock_ctx.stroke();
+    }
+
+    var cloud_ctx = document.querySelector("#cloud").getContext("2d");
+    cloud_ctx.beginPath();
+    cloud_ctx.arc(70, 60, 20, Math.PI / 2, Math.PI / 2 * 3);
+    cloud_ctx.arc(98, 50, 30, Math.PI / 2 * 3 - 1.231, Math.PI * 2); // 云的中间段圆弧，其坐标、角度为先绘制手绘稿，再通过测量，利用三角函数算出
+    cloud_ctx.arc(128, 65, 15, Math.PI / 2 * 3, Math.PI / 2);
+    cloud_ctx.lineTo(70, 80);
+    cloud_ctx.lineWidth = 2;
+    cloud_ctx.stroke();
+</script>
+<script src="js/source_data.js"></script>
+<script src="js/line.js"></script>
+<script>
+    var data = [];
+    for (let i = 0; i < sourceData.length; i++) {
+        if (sourceData[i].product == "手机" && sourceData[i].region == "华东") {
+            data = sourceData[i].sale;
+        }
+    }
+
+    var line_graph = lineDrawGraph(data);
+    document.querySelector("#line_graph").appendChild(line_graph);
+</script>
+</html>
