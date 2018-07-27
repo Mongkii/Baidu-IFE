@@ -62,6 +62,7 @@
     }
 
     Waiter.prototype = Object.create(Staff.prototype);
+    Waiter.prototype.constructor = Waiter;
     Waiter.prototype.work = function (task) {
         if (task.constructor.name == "Array") {
             return "I'm writing the receipt."
@@ -75,6 +76,7 @@
     }
 
     Cook.prototype = Object.create(Staff.prototype);
+    Cook.prototype.constructor = Cook;
     Cook.prototype.work = function () {
         return "Taste my artwork!";
     }
