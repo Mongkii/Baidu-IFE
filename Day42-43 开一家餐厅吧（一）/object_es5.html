@@ -40,7 +40,7 @@
         this.staff.push(staff);
     }
     Restaurant.prototype.fire = function (staff) {
-        for (let i = 0; i < this.staff.length; i++) {
+        for (var i = 0; i < this.staff.length; i++) {
             if (staff.id == this.staff[i].id) {
                 this.staff.splice(i, 1);
                 break; // 因为 id 唯一，找到后就直接跳出循环
