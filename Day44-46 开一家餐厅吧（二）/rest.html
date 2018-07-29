@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Restaurant</title>
+</head>
+<body>
+详见控制台
+<script>
+    var id_index = 0; // 重置 id 计数器
+
+    function generateID() { // 利用生成器自动生成 id，避免手动输入可能造成的 id 重复
+        id_index++;
+        return id_index;
+    }
+
+    function getRandom(min, max) { // 不包含 max
+        var range = max - min;
+        return Math.floor(min + Math.random() * range);
+    }
+
+    class Restaurant { // 相比上一课，删去无关参数
+        constructor() {
+            this.staff = [];
+        }
+
+        hire(staff) {
+            this.staff.push(staff);
+        }
+
+        fire(staff) {
+            for (let i = 0; i < this.staff.length; i++) {
+                if (staff.id == this.staff[i].id) {
+                    this.staff.splice(i, 1);
+                    break; // 因为 id 唯一，找到后就直接跳出循环
+                }
+            }
+        }
+    }
+
+
+    class Staff { // 相比上一课，删去无关参数
+        constructor() {
+            this.id = generateID();
+        }
+
+        work() {
+        }
+    }
+
+    class Waiter extends Staff {
+        work() {
+            if (arguments.length == 1) { // 当菜的参数传递过来时，就点菜
+                var meal = arguments[0];
+                to_do_meal.push(meal);
+                console.log("[Waiter] OK. You ordered " + meal.name + ", that's ¥" + meal.price + " in total.");
+            } else { // 没有参数时，就上菜
+                var meal = to_eat_meal.pop();
+                console.log("[Waiter] Here is your " + meal.name + ", enjoy.");
+                return meal;
+            }
+        }
+    }
+
+    class Cook extends Staff {
+        work() {
+            var meal = to_do_meal.pop();
+            console.log("[Cook] With some magic… " + meal.name + " is cooked!");
+            to_eat_meal.push(meal);
+        }
+    }
+
+    class Customer { // 此处默认构造函数为空白 constructor() {}
+        order(menu) {
+            var index = getRandom(0, menu.length);
+            console.log("[Customer] I'd like to order " + menu[index].name + ".");
+            return menu[index];
+        }
+
+        eat(meal) {
+            console.log("[Customer] Em, " + meal.name + " is very delicious!");
+            console.log("[Customer] Here is ¥" +meal.price+". See you!");
+        }
+    }
+
+    class Dish { // 相比上一课，删去无关参数
+        constructor(name, price) {
+            this.name = name;
+            this.price = price;
+        }
+    }
+
+    var restaurant = new Restaurant();
+
+    var menu = [new Dish("包子", 2.5), new Dish("馒头", 1.5), new Dish("生煎", 2), new Dish("粥", 2)];
+    var to_do_meal = [], // 待做的菜
+        to_eat_meal = []; // 待吃的菜
+
+    function getStaff(staff_class) {
+        var result = null;
+        return function () {
+            return result || (result = new staff_class());
+        }
+    }
+
+    var getCook = getStaff(Cook),
+        getWaiter = getStaff(Waiter);
+
+    var cook = getCook(),
+        waiter = getWaiter();
+
+    restaurant.hire(cook);
+    restaurant.hire(waiter);
+
+    function getCustomers(n) {
+        var list = [];
+        while (n > 0) {
+            var customer = new Customer();
+            list.push(customer);
+            n--;
+        }
+        return list;
+    }
+
+    var customer_list = getCustomers(5);
+
+    // 正常经营的一天
+    while (customer_list.length > 0) {
+        let customer = customer_list.pop(); // 召唤顾客
+        let order_meal = customer.order(menu); // 点菜
+        waiter.work(order_meal);
+        cook.work(); // 做菜
+        let eat_meal = waiter.work(); // 上菜
+        customer.eat(eat_meal);
+        console.log("---------- NEXT ONE --------");
+    }
+</script>
+</body>
+</html>
