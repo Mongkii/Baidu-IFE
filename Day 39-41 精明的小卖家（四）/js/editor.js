@@ -1,4 +1,5 @@
 var td_on_edit = {product: "", region: "", month: "", status: false}; // 当前正在编辑的 td 的属性。status 标识是否处于编辑状态
+var do_blur_func = true; // 是否执行 blur 函数的标识符。原本不小心写成了闭包，多次打开编辑器可能导致内存占用过大
 
 function createEditSign(td) {
     var sign = document.createElement("div");
@@ -132,8 +133,6 @@ function getChildIndex(child, parent) {
 }
 
 function addEventForEditor() {
-    var do_blur_func = true; // 是否执行 blur 函数的标识符
-
     var td_input = document.querySelector("#td_input"),
         btn_sumbit = document.querySelector("#edit_submit"),
         btn_cancel = document.querySelector("#edit_cancel");
