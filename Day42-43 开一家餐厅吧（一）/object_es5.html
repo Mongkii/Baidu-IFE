@@ -64,7 +64,7 @@
     Waiter.prototype = Object.create(Staff.prototype);
     Waiter.prototype.constructor = Waiter;
     Waiter.prototype.work = function (task) {
-        if (task.constructor.name == "Array") {
+        if (task instanceof Array) { // 原判断式：task.constructor.name == "Array"
             return "I'm writing the receipt."
         } else {
             return "Enjoy the meal!"
