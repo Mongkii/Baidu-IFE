@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        #canvas {
+            position: relative;
+        }
+
+        #canvas canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+    </style>
+</head>
+<body>
+<div id="canvas"></div>
+<script src="soccer.js"></script>
+<script>
+    var div = document.querySelector("#canvas");
+    var ground = createGround(105, 68);
+    var layer = drawStatic(div, ground);
+
+    var players = (function () {
+        var players = [];
+        for (let i = 0; i < 11; i++) {
+            let vnum = getRandom(1, 100),
+                power = getRandom(1, 99),
+                stamina = getRandom(1, 99);
+            let one_man = new Player(vnum, power, stamina);
+            one_man.x = getRandom(0,ground.width);
+            one_man.y = getRandom(0,ground.height);
+            players.push(one_man);
+        }
+        return players;
+    })();
+    setInterval(() => {
+        playersRunControl(players, ground);
+        drawAnimation(layer, players)
+    }, 40);
+</script>
+</body>
+</html>
