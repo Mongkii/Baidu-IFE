@@ -45,9 +45,8 @@
     })();
 
     var ball = new Ball();
-    ball.x = getRandom(0, ground.width);
-    ball.y = getRandom(0, ground.height);
-    ball.move(getRandom(0, Math.PI * 2), getRandom(10, 20), ground);
+    ball.x = ground.width / 2; // 让足球一开始静止出现在场地中央
+    ball.y = ground.height / 2;
 
     var actionControl = getActionControl();
 

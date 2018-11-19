@@ -71,7 +71,7 @@ class Player {
             sigma_offset = Math.sqrt(1 + man_kick_angle / Math.PI);
         }
         if (ball.v > 0) { // 球运动时，有射出角度的影响
-            angle_offset = Math.PI / 6 * - Math.abs(man_ball_angle - Math.PI / 2) / 3 * getGaussianRandom(0, 0.05 * sigma_base);
+            angle_offset = Math.PI / 6 * -Math.abs(man_ball_angle - Math.PI / 2) / 3 * getGaussianRandom(0, 0.05 * sigma_base);
         }
 
         var actual_angle = getGaussianRandom(angle + angle_offset, Math.PI / 20 * sigma_base * sigma_offset), // 为了不让球员太菜，标准差设置得比较小

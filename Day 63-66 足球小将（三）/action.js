@@ -185,7 +185,7 @@ function getActionControl() {
                 }
             }
         } else if (have_ball_player) {
-            var what_to_do = getRandom(1,10);
+            var what_to_do = getRandom(1, 10);
             if (what_to_do < 2) {
                 playerStopBall(have_ball_player, ball, ground);
             } else if (what_to_do < 6) {
@@ -228,8 +228,8 @@ function drawStatic(div, ground) { // 绘制静态内容
     ctx.fillStyle = "#59A345";
     ctx.fillRect(0, 0, background.width, background.height);
     ctx.fillStyle = "#3E8F49";
-    ctx.fillRect(0, background.height/2-background.height*0.27/2, background.width*0.08, background.height*0.27);
-    ctx.fillRect(background.width-background.width*0.08, background.height/2-background.height*0.27/2, background.width*0.08, background.height*0.27);
+    ctx.fillRect(0, background.height / 2 - background.height * 0.27 / 2, background.width * 0.08, background.height * 0.27);
+    ctx.fillRect(background.width - background.width * 0.08, background.height / 2 - background.height * 0.27 / 2, background.width * 0.08, background.height * 0.27);
 
     div.appendChild(background);
     div.appendChild(layer);
