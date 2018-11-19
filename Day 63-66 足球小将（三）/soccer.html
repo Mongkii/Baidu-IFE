@@ -17,27 +17,29 @@
 </head>
 <body>
 <div id="canvas"></div>
-<script src="soccer.js"></script>
+<script src="object.js"></script>
+<script src="action.js"></script>
 <script>
     var div = document.querySelector("#canvas");
-    var ground = createGround(105, 68);
+    var ground = new Ground(105, 68);
     var layer = drawStatic(div, ground);
 
     var players = (function () {
         var players = [];
-        for (let i = 0; i < 1; i++) {
-            let vnum = getRandom(1, 100),
-                burst = getRandom(1, 99),
-                stamina = getRandom(1, 99),
-                power = getRandom(1, 99),
-                skill = getRandom(1, 99);
-
-            let one_man = new Player(vnum, burst, stamina, power, skill);
-            // one_man.x = getRandom(0, ground.width);
-            // one_man.y = getRandom(0, ground.height);
-            one_man.x = 10;
-            one_man.y = 10;
-            players.push(one_man);
+        for (let i = 0; i < 2; i++) {
+            players[i] = [];
+            for (let j = 0; j < 4; j++) { // 为了不让场面过于混乱，定为 4 人制足球
+                let vnum = getRandom(1, 100),
+                    burst = getRandom(1, 99),
+                    stamina = getRandom(1, 99),
+                    power = getRandom(1, 99),
+                    skill = getRandom(1, 99);
+                let one_man = new Player(vnum, burst, stamina, power, skill);
+                one_man.x = getRandom(0, ground.width);
+                one_man.y = getRandom(0, ground.height);
+                one_man.team = i;
+                players[i].push(one_man);
+            }
         }
         return players;
     })();
@@ -47,9 +49,10 @@
     ball.y = getRandom(0, ground.height);
     ball.move(getRandom(0, Math.PI * 2), getRandom(10, 20), ground);
 
+    var actionControl = getActionControl();
+
     setInterval(() => {
-        // playersRunControl(players, ground);
-        playerRunToBall(players[0], ball, ground);
+        actionControl(players, ball, ground);
         drawAnimation(layer, players, ball);
     }, 40);
 </script>

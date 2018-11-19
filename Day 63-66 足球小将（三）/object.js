@@ -1,6 +1,7 @@
 class Player {
     constructor(vnum, burst, stamina, skill, power) {
         this.radius = 1;
+        this.team = NaN; // 队员所属队伍，可用值 0 和 1
         this.x = 0;
         this.y = 0;
         this.angle = 0; // 球员面向的角度
@@ -23,15 +24,9 @@ class Player {
             this.current_dur = 0; // 当速度为 0 时重置当前处于最高速时间，以便于 timer 不断开启停止时能保持速度，同时兼具还原体力功能
         }
 
-        var width = x - this.x,
-            height = y - this.y;
-        this.angle = Math.atan(height / width);
-        if (width < 0) { // atan 范围为 (-PI/2)~(PI/2)，因此要对角度修正，使角度范围是 0~2PI
-            this.angle += Math.PI;
-        } else if (this.angle < 0) {
-            this.angle += 2 * Math.PI;
-        }
-        var place_now = Math.sqrt(width * width + height * height), // 球员与终点的上次与这次的距离差，用于判断是否到达终点
+        this.angle = getTargetAngle(this.x, this.y, x, y);
+
+        var place_now = getDistance(x, y, this.x, this.y), // 球员与终点的上次与这次的距离差，用于判断是否到达终点
             place_last = place_now + 1;
 
         var unit_time = 1000 / interval; // 单位时间
@@ -50,7 +45,7 @@ class Player {
                 this.x += this.v * Math.cos(this.angle) / unit_time;
                 this.y += this.v * Math.sin(this.angle) / unit_time;
                 place_last = place_now;
-                place_now = Math.sqrt((x - this.x) * (x - this.x) + (y - this.y) * (y - this.y));
+                place_now = getDistance(x, y, this.x, this.y);
             } else if (this.v >= 0 && stayInBound(this, ground)) { // 到达终点后还要跑一段
                 this.v -= 2 * vmax / (acc_time * unit_time); // 设减速度是加速度 2 倍
                 this.x += this.v * Math.cos(this.angle) / unit_time;
@@ -76,13 +71,14 @@ class Player {
             sigma_offset = Math.sqrt(1 + man_kick_angle / Math.PI);
         }
         if (ball.v > 0) { // 球运动时，有射出角度的影响
-            angle_offset = Math.PI / 6 * -Math.abs(man_ball_angle - Math.PI / 2) / 3 * getGaussianRandom(0, 0.05 * sigma_base);
+            angle_offset = Math.PI / 6 * - Math.abs(man_ball_angle - Math.PI / 2) / 3 * getGaussianRandom(0, 0.05 * sigma_base);
         }
 
         var actual_angle = getGaussianRandom(angle + angle_offset, Math.PI / 20 * sigma_base * sigma_offset), // 为了不让球员太菜，标准差设置得比较小
             actual_v = getGaussianRandom(v, v / 30 * sigma_base);
         actual_v = actual_v < 0 ? 0 : actual_v > max_kick_v ? max_kick_v : actual_v;
 
+        clearInterval(ball.timer); // 让球停止当前运动
         ball.move(actual_angle, actual_v, ground);
     }
 }
@@ -114,11 +110,52 @@ class Ball {
     }
 }
 
+/* ---- 虽然建立一个 Team 类便于管理，但在此项目中，直接将 team 指定为队员属性更好操作 ----
+class Team {
+    constructor() {
+        this.list = [];
+    }
+
+    check(player) {
+        var index = this.list.indexOf(player);
+        if (index !== -1) {
+            return index + 1; // 避免返回 0 导致 T/F 判断错误
+        }
+        return false;
+    }
+
+    assign(player) {
+        if (!this.check(player)) {
+            this.list.push(player);
+        }
+    }
+
+    remove(player) {
+        var index = this.check(player);
+        if (index) {
+            this.list.splice(index - 1, 1);
+        }
+    }
+
+    clear() {
+        this.list = [];
+    }
+}
+*/
+
 
 class Ground {
     constructor(width, height) {
         this.width = width;
         this.height = height;
-        this.ball_acc = -10; // 球在球场运动的阻力
+        this.ball_acc = -5; // 球在球场运动的阻力，为了观赏性设置为 -5，真实阻力比这应该大
+        this.gate_0 = { // 左球门，将球门抽象为一个点
+            x: 0,
+            y: height / 2
+        }
+        this.gate_1 = {
+            x: width,
+            y: height / 2
+        }
     }
 }
