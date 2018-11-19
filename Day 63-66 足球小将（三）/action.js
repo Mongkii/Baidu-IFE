@@ -226,9 +226,9 @@ function drawStatic(div, ground) { // 绘制静态内容
 
     var ctx = background.getContext("2d");
 
-    ctx.fillStyle = "#59A345";
+    ctx.fillStyle = "#59A345"; // 绘制球场
     ctx.fillRect(0, 0, background.width, background.height);
-    ctx.fillStyle = "#3E8F49";
+    ctx.fillStyle = "#3E8F49"; // 绘制球门区域
     ctx.fillRect(0, background.height / 2 - background.height * 0.27 / 2, background.width * 0.08, background.height * 0.27);
     ctx.fillRect(background.width - background.width * 0.08, background.height / 2 - background.height * 0.27 / 2, background.width * 0.08, background.height * 0.27);
 
