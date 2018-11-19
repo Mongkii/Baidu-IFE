@@ -85,6 +85,7 @@ function playerRandomRun(player, ground) {
     }
 }
 
+// 虽然题目要求将以下动作都作为踢球类的子类，但没发现这样做的必要性，反而更加繁琐，因此只写成普通函数。
 function playerChaseBall(player, ball, ground) {
     clearInterval(player.timer);
     player.run(ball.x, ball.y, ground);
