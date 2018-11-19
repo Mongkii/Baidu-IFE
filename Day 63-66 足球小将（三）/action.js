@@ -25,6 +25,10 @@ class Player {
             acc_time = 4 - 3 * (this.burst - 1) / 98, // 球员加速至最高速所需时间
             duration = 10 + 5 * (this.stamina - 1) / 98; // 球员最高速持续时间
 
+        if (this.v === 0) {
+            this.current_dur = 0; // 当速度为 0 时重置当前处于最高速时间，以便于 timer 不断开启停止时能保持速度，同时兼具还原体力功能
+        }
+
         var width = x - this.x,
             height = y - this.y;
         this.angle = Math.atan(height / width);
@@ -59,7 +63,6 @@ class Player {
                 this.y += this.v * Math.sin(this.angle) / unit_time;
             } else { // 也可用 Promise 处理，这个 else 代码块的内容作为 .then() 的内容。使用 Promise 注意要 var that = this;
                 this.v = 0;
-                this.current_dur = 0;
                 clearInterval(this.timer);
             }
         }, interval);
@@ -150,22 +153,67 @@ function stayInBound(object, ground) { // 检测物体是否在边界内，若�
     return !out_of_bound;
 }
 
-function playerRunToBall(player, ball, ground) {
+function getDistance(object_1, object_2) {
+    return Math.sqrt((object_1.x - object_2.x) * (object_1.x - object_2.x) + (object_1.y - object_2.y) * (object_1.y - object_2.y));
+}
+
+function playerChaseBall(player, ball, ground) {
     clearInterval(player.timer);
     player.run(ball.x, ball.y, ground);
-    if (Math.sqrt((player.x - ball.x) * (player.x - ball.x) + (player.y - ball.y) * (player.y - ball.y)) < 0.2) { // 判定当球员与球小于一定距离时，踢球
-        clearInterval(ball.timer);
-        player.kick(getRandom(0, Math.PI * 2, false), getRandom(10, 30), ball, ground);
+    if (getDistance(player, ball) < 0.2) { // 判定当球员与球小于一定距离时，将持球队员返回
+        return player;
     }
 }
 
-function playersRunControl(players, ground) {
-    var players_count = players.length;
-    for (let i = 0; i < players_count; i++) {
-        if (players[i].v === 0) {
-            let x = getRandom(0, ground.width),
-                y = getRandom(0, ground.height);
-            players[i].run(x, y, ground);
+function playerRun(player, ground) {
+    if (player.v === 0 && Math.random() > 0.7) { // 为了让球员走走停停，当随机到大于 0.7 的数时才跑动
+        let x = getRandom(0, ground.width),
+            y = getRandom(0, ground.height);
+        players.run(x, y, ground);
+    }
+}
+
+function playerStopBall(player, ball, ground) {
+    if (player.v === 0) {
+        ball.v = 0;
+    } else {
+        
+    }
+}
+
+function actionControl() {
+    var chase_ball_players = [],
+        have_ball_player = undefined;
+    return function (players, ball, ground) {
+        if (chase_ball_players.length > 0) {
+            for (let i = 0; i < chase_ball_players.length; i++) {
+                have_ball_player = playerChaseBall(chase_ball_players[i], ball, ground);
+                if (have_ball_player) {
+                    chase_ball_players = [];
+                }
+            }
+        } else if (have_ball_player) {
+            // TBD
+        } else {
+            for (let i = 0; i < 2; i++) {
+                let min_distance = Infinity,
+                    min_player = null;
+                for (let j = 0; j < players[i].length; j++) {
+                    let current_distance = getDistance(players[i][j], ball);
+                    if (current_distance<min_distance) {
+                        min_distance = current_distance;
+                        min_player = players[i][j];
+                    }
+                }
+                min_player?chase_ball_players.push(min_player):undefined; // 更加简洁的 if 写法
+            }
+        }
+        for (let i = 0; i < 2; i++) {
+            for (let j = 0; j < players[i].length; j++) {
+                if (players[i][j] !== chase_ball_players[0] && players[i][j] !== chase_ball_players[1] && players[i][j] !== have_ball_player) {
+                    playerRun(players[i][j], ground);
+                }
+            }
         }
     }
 }

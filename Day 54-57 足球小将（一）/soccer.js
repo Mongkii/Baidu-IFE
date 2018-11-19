@@ -70,7 +70,7 @@ class Player {
 }
 
 function getRandom(min, max) {
-    return Math.ceil(min + (max - min + 1) * Math.random());
+    return Math.floor(min + (max - min + 1) * Math.random());
 }
 
 function playersRunControl(players, ground) {

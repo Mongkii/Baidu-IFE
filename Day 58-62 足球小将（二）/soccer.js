@@ -120,7 +120,7 @@ class Ball {
 
 function getRandom(min, max, integer = true) {
     if (integer) {
-        return Math.ceil(min + (max - min + 1) * Math.random());
+        return Math.floor(min + (max - min + 1) * Math.random());
     }
     else {
         return min + Math.random() * max;
