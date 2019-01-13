@@ -44,7 +44,7 @@
             transform: rotateY(-180deg);
         }
 
-        .container:hover .card {
+        .container:hover .card { /* 没有直接写成 .card:hover，是为了避免因为 .card 翻转而使鼠标离开 hover 区域的情况 */
             transform: rotateY(180deg);
         }
     </style>
