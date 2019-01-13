@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>No.2 - 初步接触 CSS 2D 变形</title>
+    <style>
+        html, body {
+            height: 100%;
+        }
+
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .container > div {
+            height: 100px;
+            width: 100px;
+            margin: 0 20px;
+            background-color: #eeeeee;
+            border: 2px solid #cccccc;
+            text-align: center;
+        }
+
+        .container span {
+            line-height: 100px;
+            text-align: center;
+        }
+
+        .skew {
+            transform: skew(30deg);
+        }
+
+        .scale {
+            transform: scaleX(0.5);
+        }
+
+        .rotate {
+            transform: rotate(45deg);
+        }
+
+        .translate {
+            transform: translate(10px, 20px);
+        }
+
+        .all {
+            transform: skew(30deg) scaleX(0.5) rotate(45deg) translate(10px, 20px);
+        }
+    </style>
+</head>
+<body>
+<div class="container"></div>
+<script>
+    const class_list = ["", "skew", "scale", "rotate", "translate", "all"];
+    var container = document.querySelector(".container");
+
+    function template(class_name, index) {
+        return `<div class=${class_name}><span>box${index}</span></div>`
+    }
+
+    container.innerHTML = ""; // 清空 container 原有内容
+    class_list.forEach((class_name,index)=> { // 使用 template 生成内容
+        container.innerHTML += template(class_name, index);
+    })
+</script>
+</body>
+</html>
