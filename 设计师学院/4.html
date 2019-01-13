@@ -15,44 +15,46 @@
         }
 
         .container {
+            perspective: 1000px;
+        }
+
+        .card {
             position: relative;
             width: fit-content;
             height: fit-content;
             transform-style: preserve-3d;
-            perspective: 1000px;
+            transition: 1s;
         }
 
-        .container img {
+        .card img {
             display: block;
-            transition: 1s;
+
             /* 设置 transform-style: preserve-3d; 后，若启用以下属性，第一次播放有时会出现问题。可能是 Chrome 的 bug
 
             backface-visibility: hidden;
 
-            不过因为是在父元素中建立 3D 透视，这两张图片绕父元素 Y 轴旋转，所以不启用该属性动画仍能正常表现
+            不过因为最终旋转的是父元素，不启用该属性也无所谓
             */
         }
 
-        .container img.back {
+        .card img.back {
             position: absolute;
             top: 0;
             left: 0;
             transform: rotateY(-180deg);
         }
 
-        .container:hover .front {
+        .container:hover .card {
             transform: rotateY(180deg);
-        }
-
-        .container:hover .back {
-            transform: rotateY(0deg);
         }
     </style>
 </head>
 <body>
 <div class="container">
+    <div class="card">
     <img src="src/No.4-Front.jpg" alt="Image front" class="front">
     <img src="src/No.4-Back.jpg" alt="Image back" class="back">
+    </div>
 </div>
 </body>
 </html>
