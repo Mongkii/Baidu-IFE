@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>No.4 - 3D 空间的卡片翻转动效</title>
+    <style>
+        html, body {
+            height: 100%;
+        }
+
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .container {
+            position: relative;
+            width: fit-content;
+            height: fit-content;
+            transform-style: preserve-3d;
+            perspective: 1000px;
+        }
+
+        .container img {
+            display: block;
+            transition: 1s;
+            /* 设置 transform-style: preserve-3d; 后，若启用以下属性，第一次播放有时会出现问题。可能是 Chrome 的 bug
+
+            backface-visibility: hidden;
+
+            不过因为是在父元素中建立 3D 透视，这两张图片绕父元素 Y 轴旋转，所以不启用该属性动画仍能正常表现
+            */
+        }
+
+        .container img.back {
+            position: absolute;
+            top: 0;
+            left: 0;
+            transform: rotateY(-180deg);
+        }
+
+        .container:hover .front {
+            transform: rotateY(180deg);
+        }
+
+        .container:hover .back {
+            transform: rotateY(0deg);
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <img src="src/No.4-Front.jpg" alt="Image front" class="front">
+    <img src="src/No.4-Back.jpg" alt="Image back" class="back">
+</div>
+</body>
+</html>
