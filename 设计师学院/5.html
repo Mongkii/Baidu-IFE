@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>No.5 - 纯 CSS 制作绕中轴旋转的立方体</title>
+    <style>
+        :root {
+            --length: 400px;
+            --time: 10s;
+        }
+
+        html, body {
+            height: 100%;
+        }
+
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #111111;
+        }
+
+        .container { /* 透视点设在外部*/
+            perspective: 1000px;
+        }
+
+        .cube {
+            position: relative;
+            width: var(--length);
+            height: var(--length);
+            transform-style: preserve-3d; /* 3D 变换空间置于内部 */
+        }
+
+        .cube div {
+            width: var(--length);
+            height: var(--length);
+            background-color: rgba(7, 134, 255, 0.3);
+            border: 2px solid #0786ff;
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+
+        /* 立方体内每一面的初始状态 */
+        .U {
+            transform: rotateY(0deg) rotateX(90deg) translateZ(calc(var(--length) / 2));
+        }
+
+        .D {
+            transform: rotateY(0deg) rotateX(-90deg) translateZ(calc(var(--length) / 2));
+        }
+
+        .F {
+            transform: rotateY(0deg) translateZ(calc(var(--length) / 2));
+        }
+
+        .R {
+            transform: rotateY(90deg) translateZ(calc(var(--length) / 2));
+        }
+
+        .B {
+            transform: rotateY(180deg) translateZ(calc(var(--length) / 2));
+        }
+
+        .L {
+            transform: rotateY(270deg) translateZ(calc(var(--length) / 2));
+        }
+
+        /* 立方体动画 */
+        .cube:hover {
+            animation: rotate var(--time) linear infinite;
+        }
+
+        /* 立方体的关键帧 */
+        @keyframes rotate {
+            0% {
+                transform: rotateY(0deg);
+            }
+            100% {
+                transform: rotateY(360deg);
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="cube">
+        <div class="U"></div>
+        <div class="D"></div>
+        <div class="F"></div>
+        <div class="R"></div>
+        <div class="B"></div>
+        <div class="L"></div>
+    </div>
+</div>
+</body>
+</html>
